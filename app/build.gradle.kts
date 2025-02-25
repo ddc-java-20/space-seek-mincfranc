@@ -43,8 +43,10 @@ android {
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         resValue("string", "app_name", project.property("appName") as String)
-        resValue("string", "api_key", getLocalProperty("api_key") ?: "")
         resValue("string", "base.url", project.property("baseUrl") as String)
+
+        resValue("string", "api_key", getLocalProperty("api_key") ?: "")
+        resValue("string", "log_level", getLocalProperty("log_level") ?: "none")
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -125,6 +127,9 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.adapter.rx.java)
+
+    //OkHttp3 (low-level HTTP client) library
+    implementation(libs.okhttp)
 
     // Hilt dependency-injection library & annotation processor
     implementation(libs.hilt.android.core)

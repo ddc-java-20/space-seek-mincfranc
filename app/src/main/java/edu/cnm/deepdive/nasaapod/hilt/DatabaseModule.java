@@ -28,6 +28,4 @@ public class DatabaseModule {
     return database.getApodDao();
   }
 
-
-
 }

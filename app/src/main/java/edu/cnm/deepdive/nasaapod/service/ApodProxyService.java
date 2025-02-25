@@ -16,7 +16,9 @@ public interface ApodProxyService {
       @Query("api_key") String apiKey);
 
   @GET("apod")
-  Single<Apod> getToday(@Query("api_key") String apiKey);
+  Single<Apod> getToday(
+      @Query("api_key") String apiKey);
+
   @GET("apod")
   Single<List<Apod>> getOpenDateRange(
       @Query("start_date") LocalDate startDate,
