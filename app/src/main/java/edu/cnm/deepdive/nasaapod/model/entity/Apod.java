@@ -15,9 +15,7 @@ import java.time.LocalDate;
     indices = {
         @Index(value = "date", unique = true)  //what the array of column name, one element of an annotation
     }
-
 )
-
 public class Apod {
 
   @PrimaryKey(autoGenerate = true)
@@ -56,7 +54,7 @@ public class Apod {
   @ColumnInfo(name = "high_def_url")
   @Expose
   @SerializedName("hdurl")
-  private URL highDefdUrl;
+  private URL highDefUrl;
 
   public long getId() {return Id;}
 
@@ -90,9 +88,9 @@ public class Apod {
 
   public void setLowDefUrl(@NonNull URL lowDefUrl) {this.lowDefUrl = lowDefUrl;}
 
-  public URL getHighDefdUrl() {return highDefdUrl;}
+  public URL getHighDefUrl() {return highDefUrl;}
 
-  public void setHighDefUrl(URL highDefdUrl) {this.highDefdUrl = highDefdUrl;}
+  public void setHighDefUrl(URL highDefdUrl) {this.highDefUrl = highDefdUrl;}
 
   public enum MediaType {
     @SerializedName("Image")

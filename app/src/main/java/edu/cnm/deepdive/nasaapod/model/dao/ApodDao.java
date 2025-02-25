@@ -1,39 +1,44 @@
 package edu.cnm.deepdive.nasaapod.model.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import edu.cnm.deepdive.nasaapod.model.entity.Apod;
-import io.reactivex.rxjava3.core.Single;
-import java.util.Iterator;
+import io.reactivex.rxjava3.core.Completable;
+import java.time.LocalDate;
 import java.util.List;
 
+//@Dao annotation indicates that this interface will define methods for interacting with the database.
 @Dao
 public interface ApodDao {
 
-  //abstract method Room will implement, this is how we tell Room what to do about duplicates
+  //insert method annotated @Insert, to insert data into database
+  // onConflict attribute is strategy to handle conflicts (IGNORE)
+  // The method takes a List of Apod objects as a parameter and returns a Completable object,
+  // which is used for asynchronous completion events.
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  Single<List<Long>> insert(List<Apod> apods);
+  Completable insert(List<Apod> apods);
 
-  //iterate in lockstep over 2 lists, 1 list primary key, 1 list
-  //use iterator object without having to use 1+ which starts all over again from the beginning for each iteration
-  //iterator takes an enhanced for loop and turns into conventional loop, nested for loop
-  //a while loop is best
-  default Single<List<Apod>> insertAndUpdate(List<Apod> apods) {
-    return insert(apods)
-        .map((ids) -> {
-          Iterator<Apod> apodIter = apods.iterator();
-          Iterator<Long> idIter = ids.iterator();
-          while (apodIter.hasNext() && idIter.hasNext()) {
-            apodIter
-                .next()
-                .setId(idIter.next());
-          }
-          apods.removeIf((apod) -> apod.getId() < 0);
-          return apods;
-    });
+  //takes a single Apod object as a parameter, to insert a single APOD data entry into database.
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  Completable insert(Apod apod);
 
-  }
+  @Query("DELETE FROM apod")
+  Completable deleteAll();
+
+  @Query("SELECT * FROM apod WHERE apod_id = :id")
+  LiveData<Apod> select(long id);
+
+  @Query("SELECT * FROM apod WHERE date = :date")
+  LiveData<Apod> select(LocalDate date);
+
+  @Query("SELECT * FROM apod WHERE date >= :startDate AND date < :endDate")
+  LiveData<List<Apod>> select(LocalDate startDate, LocalDate endDate);
+
+
+
 
 
 }
