@@ -3,13 +3,21 @@ package edu.cnm.deepdive.nasaapod.model.entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.net.URL;
 import java.time.LocalDate;
 
-@Entity(tableName = "apod")
+@Entity(
+    tableName = "apod",
+    indices = {
+        @Index(value = "date", unique = true)  //what the array of column name, one element of an annotation
+    }
+
+)
+
 public class Apod {
 
   @PrimaryKey(autoGenerate = true)
