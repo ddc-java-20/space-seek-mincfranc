@@ -78,8 +78,7 @@ public class ApodViewModel extends ViewModel {
     repository
         .fetch()
         .subscribe(
-            () -> {
-            },
+            () -> {},
             this::postThrowable
         );
   }

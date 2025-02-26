@@ -123,6 +123,9 @@ dependencies {
     // Google Sign-in library
     implementation(libs.play.auth)
 
+    //Picasso (image-handling) library
+    implementation(libs.picasso)
+
     // Retrofit (REST client) with ReactiveX & Gson integration
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
