@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @InstallIn(SingletonComponent.class)
 public class ProxyModule {
 
-  //Gson dependency
   @Provides
   @Singleton
   Gson provideGson() {
@@ -56,14 +55,12 @@ public class ProxyModule {
   ApodProxyService provideProxy(
       @ApplicationContext Context context, Gson gson, OkHttpClient client) {
     return new Retrofit.Builder()
-        .client(client) //Builder from this point forward
+        .client(client)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .baseUrl(context.getString(R.string.base_url))
-        .build() //Retrofit now
+        .build()
         .create(ApodProxyService.class);
   }
-
-
 
 }

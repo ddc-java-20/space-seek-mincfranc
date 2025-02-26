@@ -45,7 +45,7 @@ public abstract class ApodDatabase extends RoomDatabase {
     }
 
     @TypeConverter
-    public static MediaType integerToMediaType (Integer value) {
+    public static MediaType integerToMediaType(Integer value) {
       return (value != null) ? MediaType.values()[value] : null;
     }
 

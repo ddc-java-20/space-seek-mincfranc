@@ -23,7 +23,7 @@ public class ApodRepository {
   private final ApodDao apodDao;
   private final Scheduler scheduler;
   private final String apiKey;
-  
+
   @Inject
   ApodRepository(
       @ApplicationContext Context context, ApodProxyService proxyService, ApodDao apodDao) {
@@ -40,14 +40,14 @@ public class ApodRepository {
         .subscribeOn(scheduler);
   }
 
-  public Completable fetch (LocalDate startDate) {
+  public Completable fetch(LocalDate startDate) {
     return proxyService
         .getOpenDateRange(startDate, apiKey)
         .flatMapCompletable(apodDao::insert)
         .subscribeOn(scheduler);
   }
 
-  public Completable fetch (LocalDate startDate, LocalDate endDate) {
+  public Completable fetch(LocalDate startDate, LocalDate endDate) {
     return proxyService
         .getDateRange(startDate, endDate, apiKey)
         .flatMapCompletable(apodDao::insert)
@@ -62,12 +62,12 @@ public class ApodRepository {
     return apodDao.select(LocalDate.now());
   }
 
-  public LiveData<List<Apod>> get (LocalDate startDate, LocalDate endDate) {
+  public LiveData<List<Apod>> get(LocalDate startDate, LocalDate endDate) {
     return apodDao.selectRange(startDate, endDate);
   }
 
   public LiveData<List<Apod>> get(LocalDate startDate) {
-        return apodDao.selectOpenRange(startDate);
+    return apodDao.selectOpenRange(startDate);
   }
 
 }

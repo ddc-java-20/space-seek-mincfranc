@@ -41,8 +41,4 @@ public interface ApodDao {
   LiveData<List<Apod>> selectOpenRange(LocalDate startDate);
 
 
-
-
-
-
 }

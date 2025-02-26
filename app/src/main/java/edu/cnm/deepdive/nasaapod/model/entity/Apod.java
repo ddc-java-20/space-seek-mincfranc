@@ -13,7 +13,8 @@ import java.time.LocalDate;
 @Entity(
     tableName = "apod",
     indices = {
-        @Index(value = "date", unique = true)  //what the array of column name, one element of an annotation
+        @Index(value = "date", unique = true)
+        //what the array of column name, one element of an annotation
     }
 )
 public class Apod {
@@ -56,41 +57,73 @@ public class Apod {
   @SerializedName("hdurl")
   private URL highDefUrl;
 
-  public long getId() {return Id;}
+  public long getId() {
+    return Id;
+  }
 
-  public void setId(long id) {Id = id;}
-
-  @NonNull
-  public String getTitle() {return title;}
-
-  public void setTitle(@NonNull String title) {this.title = title;}
-
-  public String getDescription() {return description;}
-
-  public void setDescription(String description) {this.description = description;}
+  public void setId(long id) {
+    Id = id;
+  }
 
   @NonNull
-  public LocalDate getDate() {return date;}
+  public String getTitle() {
+    return title;
+  }
 
-  public void setDate(@NonNull LocalDate date) {this.date = date;}
+  public void setTitle(@NonNull String title) {
+    this.title = title;
+  }
 
-  public String getCopyright() {return copyright;}
+  public String getDescription() {
+    return description;
+  }
 
-  public void setCopyright(String copyright) {this.copyright = copyright;}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
   @NonNull
-  public MediaType getMediaType() {return mediaType;}
+  public LocalDate getDate() {
+    return date;
+  }
 
-  public void setMediaType(@NonNull MediaType mediaType) {this.mediaType = mediaType;}
+  public void setDate(@NonNull LocalDate date) {
+    this.date = date;
+  }
+
+  public String getCopyright() {
+    return copyright;
+  }
+
+  public void setCopyright(String copyright) {
+    this.copyright = copyright;
+  }
 
   @NonNull
-  public URL getLowDefUrl() {return lowDefUrl;}
+  public MediaType getMediaType() {
+    return mediaType;
+  }
 
-  public void setLowDefUrl(@NonNull URL lowDefUrl) {this.lowDefUrl = lowDefUrl;}
+  public void setMediaType(@NonNull MediaType mediaType) {
+    this.mediaType = mediaType;
+  }
 
-  public URL getHighDefUrl() {return highDefUrl;}
+  @NonNull
+  public URL getLowDefUrl() {
+    return lowDefUrl;
+  }
 
-  public void setHighDefUrl(URL highDefdUrl) {this.highDefUrl = highDefdUrl;}
+  public void setLowDefUrl(@NonNull URL lowDefUrl) {
+    this.lowDefUrl = lowDefUrl;
+  }
+
+  public URL getHighDefUrl() {
+    return highDefUrl;
+  }
+
+  public void setHighDefUrl(URL highDefdUrl) {
+    this.highDefUrl = highDefdUrl;
+  }
 
   public enum MediaType {
     @SerializedName("Image")
