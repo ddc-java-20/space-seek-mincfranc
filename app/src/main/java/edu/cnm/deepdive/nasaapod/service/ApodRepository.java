@@ -29,7 +29,7 @@ public class ApodRepository {
       @ApplicationContext Context context, ApodProxyService proxyService, ApodDao apodDao) {
     this.proxyService = proxyService;
     this.apodDao = apodDao;
-    scheduler = Schedulers.io(); // TODO: 2/25/25  Investigate a fixed size pool.
+    scheduler = Schedulers.io(); // TODO: 2025-02-25 Investigate a fixed-size pool.
     apiKey = context.getString(R.string.api_key);
   }
 

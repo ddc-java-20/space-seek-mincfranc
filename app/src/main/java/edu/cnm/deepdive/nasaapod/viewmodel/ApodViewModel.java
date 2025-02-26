@@ -11,6 +11,7 @@ import edu.cnm.deepdive.nasaapod.model.entity.Apod;
 import edu.cnm.deepdive.nasaapod.service.ApodRepository;
 import java.time.LocalDate;
 import java.util.List;
+import javax.inject.Inject;
 
 @HiltViewModel
 public class ApodViewModel extends ViewModel {
@@ -22,7 +23,8 @@ public class ApodViewModel extends ViewModel {
   private final LiveData<List<Apod>> apods;
   private final MutableLiveData<Throwable> throwable;
 
-  public ApodViewModel(ApodRepository repository) {
+  @Inject
+  ApodViewModel(ApodRepository repository) {
     this.repository = repository;
     dateRange = new MutableLiveData<>();
     apods = Transformations.switchMap(dateRange, (range) -> (range.endDate != null)
@@ -42,13 +44,13 @@ public class ApodViewModel extends ViewModel {
   @SuppressLint("CheckResult")
   public void setRange(LocalDate startDate, LocalDate endDate) {
     throwable.setValue(null);
-    dateRange.setValue(new DateRange(startDate, endDate)); //lookup that date range & update it
-    //noinspection ResultofMethodCallIgnored
+    dateRange.setValue(new DateRange(startDate, endDate));
+    //noinspection ResultOfMethodCallIgnored
     repository
         .fetch(startDate, endDate)
-        .subscribe( // subscribe to a consumer of success
+        .subscribe(
             () -> {
-            }, //empty parameters, empty lambda body
+            },
             this::postThrowable
         );
   }
@@ -57,19 +59,33 @@ public class ApodViewModel extends ViewModel {
   public void setRange(LocalDate startDate) {
     throwable.setValue(null);
     dateRange.setValue(new DateRange(startDate));
-    //noinspection ResultofMethodCallIgnored
+    //noinspection ResultOfMethodCallIgnored
     repository
         .fetch(startDate)
-        .subscribe( // subscribe to a consumer of success
+        .subscribe(
             () -> {
-            }, //empty parameters, empty lambda body
+            },
             this::postThrowable
         );
   }
 
+  /**
+   * @noinspection ResultOfMethodCallIgnored
+   */
+  @SuppressLint("CheckResult")
+  public void setToday() {
+    throwable.setValue(null);
+    repository
+        .fetch()
+        .subscribe(
+            () -> {
+            },
+            this::postThrowable
+        );
+  }
 
   private void postThrowable(Throwable throwable) {
-    Log.e(TAG, throwable.getMessage(), throwable); //this is the stacktrace in a log
+    Log.e(TAG, throwable.getMessage(), throwable);
     this.throwable.postValue(throwable);
   }
 

@@ -21,7 +21,7 @@ public class Apod {
 
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "apod_id")
-  private long Id;
+  private long id;
 
   @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
   @Expose
@@ -58,11 +58,11 @@ public class Apod {
   private URL highDefUrl;
 
   public long getId() {
-    return Id;
+    return id;
   }
 
   public void setId(long id) {
-    Id = id;
+    this.id = id;
   }
 
   @NonNull

@@ -14,14 +14,9 @@ import java.util.List;
 @Dao
 public interface ApodDao {
 
-  //insert method annotated @Insert, to insert data into database
-  // onConflict attribute is strategy to handle conflicts (IGNORE)
-  // The method takes a List of Apod objects as a parameter and returns a Completable object,
-  // which is used for asynchronous completion events.
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   Completable insert(List<Apod> apods);
 
-  //takes a single Apod object as a parameter, to insert a single APOD data entry into database.
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   Completable insert(Apod apod);
 
@@ -34,7 +29,7 @@ public interface ApodDao {
   @Query("SELECT * FROM apod WHERE date = :date")
   LiveData<Apod> select(LocalDate date);
 
-  @Query("SELECT * FROM apod WHERE date >= :startDate AND date < :endDate")
+  @Query("SELECT * FROM apod WHERE date >= :startDate AND date < :endDate ORDER BY date ASC")
   LiveData<List<Apod>> selectRange(LocalDate startDate, LocalDate endDate);
 
   @Query("SELECT * FROM apod WHERE date >= :startDate ORDER BY date ASC")
