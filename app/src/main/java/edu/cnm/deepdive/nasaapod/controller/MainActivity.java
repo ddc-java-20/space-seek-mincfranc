@@ -20,14 +20,15 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
-// TODO: 2/26/25 Attach listeners to view widgets (fields in binding).
-    // TODO: 2/26/25 Update state of view widgets.
+    // TODO: 2025-02-26 Attach listeners to view widgets (fields in binding).
+    // TODO: 2025-02-26 Update state of view widgets.
     setContentView(binding.getRoot());
     viewModel = new ViewModelProvider(this).get(ApodViewModel.class);
     viewModel
-        .getApod()  //returns reference to live data of apod, it's a reference to a live data bucket
-        .observe(this, apod ->
+        .getApod()
+        .observe(this, (apod) ->
             Log.d(TAG, "onChanged: " + apod));
     viewModel.setToday();
   }
+
 }

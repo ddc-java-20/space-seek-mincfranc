@@ -35,5 +35,4 @@ public interface ApodDao {
   @Query("SELECT * FROM apod WHERE date >= :startDate ORDER BY date ASC")
   LiveData<List<Apod>> selectOpenRange(LocalDate startDate);
 
-
 }

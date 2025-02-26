@@ -13,8 +13,7 @@ import java.time.LocalDate;
 @Entity(
     tableName = "apod",
     indices = {
-        @Index(value = "date", unique = true)
-        //what the array of column name, one element of an annotation
+        @Index(value = {"date"}, unique = true)
     }
 )
 public class Apod {
@@ -121,14 +120,14 @@ public class Apod {
     return highDefUrl;
   }
 
-  public void setHighDefUrl(URL highDefdUrl) {
-    this.highDefUrl = highDefdUrl;
+  public void setHighDefUrl(URL highDefUrl) {
+    this.highDefUrl = highDefUrl;
   }
 
   public enum MediaType {
-    @SerializedName("Image")
+    @SerializedName("image")
     IMAGE(true),
-    @SerializedName("Video")
+    @SerializedName("video")
     VIDEO(false);
 
     private final boolean downloadable;
@@ -137,10 +136,10 @@ public class Apod {
       this.downloadable = downloadable;
     }
 
-    //this is a generated getter for downloadable
     public boolean isDownloadable() {
       return downloadable;
     }
 
   }
+
 }
