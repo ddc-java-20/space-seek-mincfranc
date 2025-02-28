@@ -11,6 +11,9 @@ import edu.cnm.deepdive.nasaapod.model.entity.Apod;
 import edu.cnm.deepdive.nasaapod.service.ApodRepository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 @HiltViewModel
@@ -39,6 +42,17 @@ public class ApodViewModel extends ViewModel {
 
   public LiveData<Apod> getApod() {
     return repository.get();
+  }
+
+  //apods is a field, apodList is content of field
+  //which will be returned as map, and to collect things from map
+  //we need 2 things - stream of data/source &
+  //identity transformation or (apod) -> apod)
+
+  public LiveData<Map<LocalDate, Apod>> getApodMap() {
+    return Transformations.map(apods, (apodList) -> apodList
+        .stream()
+        .collect(Collectors.toMap(Apod::getDate, Function.identity())));
   }
 
   @SuppressLint("CheckResult")

@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.kizitonwose.calendar.core.CalendarDay;
-import com.kizitonwose.calendar.view.MonthDayBinder;
+import androidx.lifecycle.ViewModelProvider;
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.cnm.deepdive.nasaapod.adapter.DayHolder;
+import edu.cnm.deepdive.nasaapod.adapter.DayBinder;
 import edu.cnm.deepdive.nasaapod.databinding.FragmentCalendarBinding;
 import edu.cnm.deepdive.nasaapod.viewmodel.ApodViewModel;
+import java.time.DayOfWeek;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 @AndroidEntryPoint
 public class CalendarFragment extends Fragment {
@@ -25,26 +29,27 @@ public class CalendarFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     binding = FragmentCalendarBinding.inflate(inflater, container, false);
-    binding.calendar.setDayBinder(new MonthDayBinder<DayHolder>() {
-
-      @Override
-      public void bind(@NonNull DayHolder holder, CalendarDay calendarDay) {
-        holder.bind(calendarDay);
-      }
-
-      @Override
-      public @NonNull DayHolder create(@NonNull View view) {
-        return new DayHolder(view);
-      }
-    });
     // TODO: 2/28/25 Initialize UI.
     return binding.getRoot();
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    // TODO: 2/28/25 Connect to viewModel and observe LiveData, and start asynchronous processes, as necessary.
     super.onViewCreated(view, savedInstanceState);
+    viewModel = new ViewModelProvider(requireActivity())
+        .get(ApodViewModel.class);
+    YearMonth currentMonth = YearMonth.now();
+    YearMonth startingMonth = YearMonth.of(1995, Month.JUNE);
+    DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
+    viewModel
+        .getApodMap()
+        .observe(getViewLifecycleOwner(), (apodMap) -> {
+          binding.calendar.setDayBinder(new DayBinder(apodMap));
+          binding.calendar.setup(startingMonth, currentMonth, firstDayOfWeek);
+          binding.calendar.scrollToMonth(currentMonth);
+        });
+    viewModel.setRange(currentMonth.atDay(1));
+    // TODO: 2025-02-28 Observe livedata and start asynchronous processes, as necessary.
   }
 
   @Override
@@ -52,4 +57,5 @@ public class CalendarFragment extends Fragment {
     // TODO: 2/28/25 Release references to binding
     super.onDestroyView();
   }
+
 }
