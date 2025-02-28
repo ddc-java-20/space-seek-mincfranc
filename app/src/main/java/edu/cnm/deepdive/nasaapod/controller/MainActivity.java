@@ -3,11 +3,9 @@ package edu.cnm.deepdive.nasaapod.controller;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import com.squareup.picasso.Picasso;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.nasaapod.databinding.ActivityMainBinding;
 import edu.cnm.deepdive.nasaapod.viewmodel.ApodViewModel;
-import javax.inject.Inject;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -16,9 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
   private ActivityMainBinding binding;
   private ApodViewModel viewModel;
-
-  @Inject
-  Picasso picasso;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
   private void setupViewModel() {
     viewModel = new ViewModelProvider(this).get(ApodViewModel.class);
-    viewModel
-        .getApod()
-        .observe(this, (apod) -> {
-          if (apod != null) {
-            // TODO: 2/26/25 Grab image (how?) and put in ImageView widget.
-            picasso
-                .load(apod.getLowDefUrl().toString())
-                .into(binding.image);
-          }
-        });
-    viewModel.setToday();
+
   }
 }

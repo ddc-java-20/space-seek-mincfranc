@@ -42,6 +42,7 @@ shadow = "8.1.1"
 picasso = "2.8"
 schema-parser = "1.0.0"
 commons-rng-simple = "1.5"
+kizitonwose-calendar = "2.6.2"
 
 # Test plugin & library versions
 junit = "5.11.4"
@@ -117,6 +118,9 @@ dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", versi
 
 # Apache Commons RNG-Simple
 commons-rng-simple = { group = "org.apache.commons", name = "commons-rng-simple", version.ref = "commons-rng-simple" }
+
+#Kizitinwose Calendar widget
+kizitonwoes-calendar = { group = "com.kizitonwose.calendar", name = "view", version.ref = "kizitonwose-calendar" }
 
 # Libraries for JVM-based testing.
 junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
