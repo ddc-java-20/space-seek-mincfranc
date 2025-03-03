@@ -21,6 +21,7 @@ public class ApodRepository {
 
   private final ApodProxyService proxyService;
   private final ApodDao apodDao;
+  private final LocalDate firstApodDate;
   private final Scheduler scheduler;
   private final String apiKey;
 
@@ -29,27 +30,19 @@ public class ApodRepository {
       @ApplicationContext Context context, ApodProxyService proxyService, ApodDao apodDao) {
     this.proxyService = proxyService;
     this.apodDao = apodDao;
+    firstApodDate = LocalDate.parse(context.getString(R.string.first_apod_date));
     scheduler = Schedulers.io(); // TODO: 2025-02-25 Investigate a fixed-size pool.
     apiKey = context.getString(R.string.api_key);
   }
 
-  public Completable fetch() {
-    return proxyService
-        .getToday(apiKey)
-        .flatMapCompletable(apodDao::insert)
-        .subscribeOn(scheduler);
-  }
-
-  public Completable fetch(LocalDate startDate) {
-    return proxyService
-        .getOpenDateRange(startDate, apiKey)
-        .flatMapCompletable(apodDao::insert)
-        .subscribeOn(scheduler);
-  }
-
   public Completable fetch(LocalDate startDate, LocalDate endDate) {
-    return proxyService
-        .getDateRange(startDate, endDate, apiKey)
+    if (startDate.isBefore(firstApodDate)) {
+      startDate = firstApodDate;
+    }
+    return (!endDate.isBefore(LocalDate.now())  //if end date is NOT before current date
+        ? proxyService.getOpenDateRange(startDate, apiKey)
+        : proxyService.getDateRange(startDate, endDate, apiKey)
+    )
         .flatMapCompletable(apodDao::insert)
         .subscribeOn(scheduler);
   }

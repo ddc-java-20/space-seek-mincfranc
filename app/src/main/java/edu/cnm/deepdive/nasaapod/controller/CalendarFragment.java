@@ -12,13 +12,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.nasaapod.R;
 import edu.cnm.deepdive.nasaapod.adapter.DayBinder;
 import edu.cnm.deepdive.nasaapod.databinding.FragmentCalendarBinding;
+import edu.cnm.deepdive.nasaapod.model.entity.Apod;
 import edu.cnm.deepdive.nasaapod.viewmodel.ApodViewModel;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.YearMonth;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
+import java.util.Map;
 import javax.inject.Inject;
 
 @AndroidEntryPoint
@@ -52,23 +53,35 @@ public class CalendarFragment extends Fragment {
     return binding.getRoot();
   }
 
+
+  //
+//    apodMap.keySet().stream(): This line creates a stream of keys from the apodMap, which is a Map<LocalDate, Apod>. The keySet() method returns a Set of keys, and stream() converts the Set into a stream.
+//      .map(YearMonth::from): This line applies a mapping function to each element in the stream. The map method transforms each LocalDate key into a YearMonth object using the YearMonth::from method reference. The YearMonth::from method takes a LocalDate and returns a YearMonth object representing the year and month of that date.
+//      .distinct(): This line ensures that the resulting stream contains distinct YearMonth objects. It removes any duplicate YearMonth objects that may have been produced due to multiple LocalDate keys falling within the same month.
+//    .forEach(binding.calendar::notifyMonthChanged): This line performs an action for each YearMonth object in the stream. The forEach method iterates over the stream and applies the provided action to each element. In this case, the action is specified as binding.calendar::notifyMonthChanged, which is a method reference to the notifyMonthChanged method of the binding.calendar object.
+//
+//  So, the code iterates over the keys of the apodMap, converts each LocalDate key to a YearMonth object, ensures distinct months, and then calls the notifyMonthChanged method on the binding.calendar object for each distinct month. This is likely used to update the calendar view when new data is available, ensuring that the calendar is notified of changes in the displayed months.
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(requireActivity())
         .get(ApodViewModel.class);
-    YearMonth currentMonth = YearMonth.now();
-    YearMonth startingMonth = YearMonth.of(1995, Month.JUNE);
-    DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
     viewModel
         .getApodMap()
-        .observe(getViewLifecycleOwner(), (apodMap) -> {
-          binding.calendar.setDayBinder(new DayBinder(apodMap));
-          binding.calendar.setup(startingMonth, currentMonth, firstDayOfWeek);
-          binding.calendar.scrollToMonth(currentMonth);
-        });
-    viewModel.setRange(currentMonth.atDay(1));
+        .observe(getViewLifecycleOwner(), this::handleApods);
     // TODO: 2025-02-28 Observe livedata and start asynchronous processes, as necessary.
+  }
+
+  private void handleApods(Map<LocalDate, Apod> apodMap) {
+    Map<LocalDate, Apod> binderMap = dayBinder.getApodMap();
+    binderMap.clear();
+    binderMap.putAll(apodMap);
+    apodMap
+        .keySet()
+        .stream()
+        .map(YearMonth::from)
+        .distinct()
+        .forEach(binding.calendar::notifyMonthChanged);
   }
 
   @Override
