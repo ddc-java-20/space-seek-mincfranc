@@ -1,0 +1,25 @@
+<navigation
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  app:startDestination="@id/calendar_fragment">
+
+  <fragment
+    android:id="@+id/calendar_fragment"
+    android:label="@string/app_name"
+    android:name="edu.cnm.deepdive.nasaapod.controller.CalendarFragment"
+    tools:layout="@layout/fragment_calendar">
+
+    <!--    TODO Add actions for navigating to other fragment(s).-->
+
+
+  </fragment>
+
+  <!--TODO Add image fragment, etc.-->
+
+
+</navigation>
+
+
+  <!--android:name=  asks what fragments we have-->
+  <!--android:label=appname in gradleResValues.xml-->

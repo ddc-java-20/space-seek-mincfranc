@@ -5,10 +5,13 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <!--  TODO Reference header resource for the calendar.-->
+
   <com.kizitonwose.calendar.view.CalendarView
     android:id="@+id/calendar"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
+    app:cv_scrollPaged="true"
     android:layout_margin="@dimen/half_dynamic_spacing"
     app:cv_dayViewResource="@layout/day_calendar"
     app:layout_constraintEnd_toEndOf="parent"
