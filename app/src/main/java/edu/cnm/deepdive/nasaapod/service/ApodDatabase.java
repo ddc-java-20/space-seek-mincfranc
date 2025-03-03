@@ -55,9 +55,10 @@ public abstract class ApodDatabase extends RoomDatabase {
     }
 
     @TypeConverter
-    public static URL stringToURL(String value) throws URISyntaxException, MalformedURLException {
+    public static URL stringToUrl(String value) throws URISyntaxException, MalformedURLException {
       return (value != null) ? new URI(value).toURL() : null;
     }
   }
+
 
 }

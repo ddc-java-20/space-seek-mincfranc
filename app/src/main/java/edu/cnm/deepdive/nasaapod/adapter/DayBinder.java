@@ -5,12 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import com.kizitonwose.calendar.core.CalendarDay;
 import com.kizitonwose.calendar.core.DayPosition;
 import com.kizitonwose.calendar.view.MonthDayBinder;
 import com.kizitonwose.calendar.view.ViewContainer;
 import dagger.hilt.android.qualifiers.ActivityContext;
+import dagger.hilt.android.scopes.FragmentScoped;
 import edu.cnm.deepdive.nasaapod.R;
 import edu.cnm.deepdive.nasaapod.databinding.DayCalendarBinding;
 import edu.cnm.deepdive.nasaapod.model.entity.Apod;
@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
+@FragmentScoped
 public class DayBinder implements MonthDayBinder<ViewContainer> {
 
   private static final String TAG = DayBinder.class.getSimpleName();
@@ -41,14 +42,14 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
     };
   }
 
-  @NonNull
+  @NotNull
   @Override
-  public ViewContainer create(@NonNull View view) {
+  public ViewContainer create(@NotNull View view) {
     return new DayHolder(view);
   }
 
   @Override
-  public void bind(@NonNull ViewContainer holder, CalendarDay calendarDay) {
+  public void bind(@NotNull ViewContainer holder, CalendarDay calendarDay) {
     ((DayHolder) holder).bind(calendarDay);
   }
 
@@ -86,7 +87,7 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
     public void bind(CalendarDay calendarDay) {
       TextView dayText = binding.getRoot();
       dayText.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
-      // TODO: 2/28/25 Use information from apodMap to modify style/content of widgets. For Monday 3/3/
+      // TODO: 2025-02-28 Use information from apodMap to modify style/content of widgets.
       Apod apod = apodMap.get(calendarDay.getDate());
       if (apod != null) {
         this.apod = apod;
@@ -117,5 +118,7 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
     private void translateClick(View view) {
       listener.onApodClick(apod);
     }
+
   }
+
 }

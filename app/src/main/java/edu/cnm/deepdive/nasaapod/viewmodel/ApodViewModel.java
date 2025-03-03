@@ -33,9 +33,9 @@ public class ApodViewModel extends ViewModel {
     this.repository = repository;
     yearMonth = new MutableLiveData<>(YearMonth.now());
     apodId = new MutableLiveData<>();
+    throwable = new MutableLiveData<>();
     apods = Transformations.switchMap(Transformations.distinctUntilChanged(yearMonth),
         this::transformYearMonthToQuery);
-    throwable = new MutableLiveData<>();
   }
 
   public LiveData<List<Apod>> getApods() {
@@ -45,8 +45,7 @@ public class ApodViewModel extends ViewModel {
   public LiveData<Apod> getApod() {
     return Transformations.switchMap(Transformations.distinctUntilChanged(apodId), repository::get);
   }
-
-  //apods is a field, apodList is content of field
+  //apods is a field, apodList is content of the field
   //which will be returned as map, and to collect things
   // from map
   //we need 2 things - stream of data/source &
@@ -62,6 +61,10 @@ public class ApodViewModel extends ViewModel {
     return yearMonth;
   }
 
+  public void setYearMonth(YearMonth yearMonth) {
+    this.yearMonth.setValue(yearMonth);
+  }
+
   /**
    * @noinspection ResultOfMethodCallIgnored
    */
@@ -75,7 +78,7 @@ public class ApodViewModel extends ViewModel {
         .subscribe(
             () -> {
             },
-            throwable::setValue
+            this::postThrowable
         );
     return repository.get(startDate, endDate);
   }

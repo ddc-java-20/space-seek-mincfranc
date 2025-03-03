@@ -42,7 +42,7 @@ android {
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         resValue("string", "app_name", project.property("appName") as String)
-        resValue("string", "base.url", project.property("baseUrl") as String)
+        resValue("string", "base_url", project.property("baseUrl") as String)
 
         resValue("string", "api_key", getLocalProperty("api_key") ?: "")
         resValue("string", "log_level", getLocalProperty("log_level") ?: "none")
@@ -123,7 +123,7 @@ dependencies {
     // Google Sign-in library
     implementation(libs.play.auth)
 
-    //Picasso (image-handling) library
+    // Picasso (image-handling) library
     implementation(libs.picasso)
 
     // Retrofit (REST client) with ReactiveX & Gson integration
@@ -131,7 +131,7 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.adapter.rx.java)
 
-    //OkHttp3 (low-level HTTP client) library
+    // OkHttp3 (low-level HTTP client) library
     implementation(libs.okhttp)
 
     // Hilt dependency-injection library & annotation processor
@@ -141,8 +141,8 @@ dependencies {
     // OkHttp logging dependency
     implementation(libs.logging.interceptor)
 
-    //Kizitonwose calendar widget
-    implementation(libs.kizitonwoes.calendar)
+    // Kizitonwose calendar widget library
+    implementation(libs.kizitonwose.calendar)
 
     // Libraries for JVM-based testing.
     testImplementation(libs.junit.api)

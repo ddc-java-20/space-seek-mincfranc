@@ -2,10 +2,13 @@ package edu.cnm.deepdive.nasaapod.controller;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import dagger.hilt.android.AndroidEntryPoint;
+import edu.cnm.deepdive.nasaapod.R;
 import edu.cnm.deepdive.nasaapod.databinding.ActivityMainBinding;
-import edu.cnm.deepdive.nasaapod.viewmodel.ApodViewModel;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -13,24 +16,31 @@ public class MainActivity extends AppCompatActivity {
   private static final String TAG = MainActivity.class.getSimpleName();
 
   private ActivityMainBinding binding;
-  private ApodViewModel viewModel;
+  private NavController navController;
+  private AppBarConfiguration appBarConfig;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setupUI();
-    setupViewModel();
+    setupNavigation();
+  }
+
+  @Override
+  public boolean onSupportNavigateUp() {
+    return NavigationUI.navigateUp(navController, appBarConfig);
   }
 
   private void setupUI() {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
-    // TODO: 2025-02-26 Attach listeners to view widgets (fields in binding).
-    // TODO: 2025-02-26 Update state of view widgets.
     setContentView(binding.getRoot());
   }
 
-  private void setupViewModel() {
-    viewModel = new ViewModelProvider(this).get(ApodViewModel.class);
-
+  private void setupNavigation() {
+    appBarConfig = new AppBarConfiguration.Builder(R.id.calendar_fragment).build();
+    navController = ((NavHostFragment) binding.navHostFragment.getFragment()) //cast binding to NavHostFragment
+        .getNavController();
+    NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
   }
+
 }
