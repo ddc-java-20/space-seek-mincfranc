@@ -6,4 +6,5 @@
   android:layout_height="match_parent"
   android:gravity="center"
   android:textAppearance="@style/CalendarTextAppearance"
+  style="@style/CalendarDay"
   tools:text="31"/>
