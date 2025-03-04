@@ -51,6 +51,10 @@ public class ApodViewModel extends ViewModel {
   //we need 2 things - stream of data/source &
   //identity transformation or (apod) -> apod)
 
+  public void setApodId(long apodId) {
+    this.apodId.setValue(apodId);
+  }
+
   public LiveData<Map<LocalDate, Apod>> getApodMap() {
     return Transformations.map(apods, (apodList) -> apodList
         .stream()

@@ -10,12 +10,28 @@
     android:name="edu.cnm.deepdive.nasaapod.controller.CalendarFragment"
     tools:layout="@layout/fragment_calendar">
 
-    <!--    TODO Add actions for navigating to other fragment(s).-->
+    <action
+      android:id="@+id/show_image"
+      app:destination="@id/image_fragment">
 
+      <argument
+        android:name="apod_id"
+        app:argType="long"/>
+
+    </action>
 
   </fragment>
 
-  <!--TODO Add image fragment, etc.-->
+  <fragment
+    android:id="@+id/image_fragment"
+    android:name="edu.cnm.deepdive.nasaapod.controller.ImageFragment"
+    tools:layout="@layout/fragment_image">
+
+    <argument
+      android:name="apod_id"
+      app:argType="long"/>
+
+  </fragment>
 
 
 </navigation>

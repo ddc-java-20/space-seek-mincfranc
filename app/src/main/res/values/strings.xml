@@ -6,6 +6,7 @@
   <string name="image_load_error_message">Unable to retrieve image</string>
 
   <string name="apod_tooltip_format">[%1$s] %2$s</string>
+  <string name="image_error_message">Unable to retrieve APOD image</string>
 
   <string-array name="media_types">
     <item>Image</item>
