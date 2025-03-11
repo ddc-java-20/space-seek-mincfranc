@@ -30,6 +30,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "nasa-apod"
+rootProject.name = "space-seek"
 
 include(":app")
