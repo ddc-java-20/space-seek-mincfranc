@@ -56,6 +56,17 @@ public class Apod {
   @SerializedName("hdurl")
   private URL highDefUrl;
 
+  @ColumnInfo(name = "location")
+  @Expose
+  private String location;
+
+  @ColumnInfo(name = "date_taken")
+  @Expose
+  private LocalDate dateTaken;
+
+  @ColumnInfo(name = "is_favorite")
+  private boolean isFavorite;
+
   public long getId() {
     return id;
   }
@@ -122,6 +133,22 @@ public class Apod {
 
   public void setHighDefUrl(URL highDefUrl) {
     this.highDefUrl = highDefUrl;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public LocalDate getDateTaken() {
+    return dateTaken;
+  }
+
+  public boolean isFavorite() {
+    return isFavorite;
+  }
+
+  public void setFavorite(boolean favorite) {
+    isFavorite = favorite;
   }
 
   public enum MediaType {

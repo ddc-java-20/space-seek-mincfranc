@@ -37,7 +37,7 @@ Below these instructions, use the checkboxes below to indicate the insert, updat
 
 Your DAO will also need to declare methods that read data from the database, providing that (usually via a repository) to the viewmodel. This will usually be returned as `LiveData` or as a value passed along a ReactiveX `Single` or `Maybe` reactive stream.
 
-If you think you will have multiple queries that return a single instance, and/or multiple queries that return multiple instances, copy and pase the bullet items below as many times as necessary.
+If you think you will have multiple queries that return a single instance, and/or multiple queries that return multiple instances, copy and paste the bullet items below as many times as necessary.
 
 * [ ] Return a single instance, selected by {_replace this the name(s) of the attribute(s) that will be used to filter for a single instance of the entity_}.
 
