@@ -139,8 +139,16 @@ public class Apod {
     return location;
   }
 
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
   public LocalDate getDateTaken() {
     return dateTaken;
+  }
+
+  public void setDateTaken(LocalDate dateTaken) {
+    this.dateTaken = dateTaken;
   }
 
   public boolean isFavorite() {
