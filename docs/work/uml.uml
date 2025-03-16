@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.cnm.deepdive.nasaapod.controller</OriginalElement>
+  <nodes>
+    <node x="464.82493844357566" y="-66.39161605935888">edu.cnm.deepdive.nasaapod.hilt.DatabaseModule</node>
+    <node x="751.9417454072476" y="327.8169838632307">edu.cnm.deepdive.nasaapod.model.entity.Apod</node>
+    <node x="382.33972435255413" y="246.36666741180403">edu.cnm.deepdive.nasaapod.hilt.PicassoModule</node>
+    <node x="217.87821497092676" y="-192.6244353616829">edu.cnm.deepdive.nasaapod.NasaApodApplication</node>
+    <node x="992.6247511933418" y="222.29255464460016">edu.cnm.deepdive.nasaapod.controller.MainActivity</node>
+    <node x="190.41082118466363" y="-103.62751742474444">edu.cnm.deepdive.nasaapod.service.ApodProxyService</node>
+    <node x="-219.61060063465806" y="-184.7186280236739">edu.cnm.deepdive.nasaapod.viewmodel.ApodViewModel</node>
+    <node x="171.4188792870484" y="207.98781296094887">edu.cnm.deepdive.nasaapod.hilt.ProxyModule</node>
+    <node x="391.259615573806" y="374.0872758879366">edu.cnm.deepdive.nasaapod.adapter.HeaderBinder</node>
+    <node x="498.40777600265267" y="98.83117513168861">edu.cnm.deepdive.nasaapod.service.ApodRepository</node>
+    <node x="-81.58899700940631" y="133.10120478212042">edu.cnm.deepdive.nasaapod.service.ApodDatabase</node>
+    <node x="608.9002916076629" y="204.301443121467">edu.cnm.deepdive.nasaapod.model.dao.ApodDao</node>
+    <node x="21.62921173262137" y="318.4227092066247">edu.cnm.deepdive.nasaapod.adapter.DayBinder</node>
+    <node x="762.3248382660695" y="-124.6838836946061">edu.cnm.deepdive.nasaapod.controller.CalendarFragment</node>
+    <node x="186.26104726102398" y="51.60559965585435">edu.cnm.deepdive.nasaapod.controller.ImageFragment</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="0.6301747930082797" showDependencies="false" x="469.0000000000001" y="350.50000000000006" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
