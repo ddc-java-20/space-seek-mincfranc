@@ -47,7 +47,7 @@ public interface ApodDao {
   LiveData<List<Apod>> selectOpenRange(LocalDate startDate);
 
   // Retrieves list of favorite apod entities.
-  @Query("SELECT * FROM apod WHERE is_favorite = 1")
+  @Query("SELECT * FROM apod WHERE favorite = 1")
   LiveData<List<Apod>> getAndUpdateFavorites();
 
 }
