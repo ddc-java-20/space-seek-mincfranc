@@ -48,6 +48,6 @@ public interface ApodDao {
 
   // Retrieves list of favorite apod entities.
   @Query("SELECT * FROM apod WHERE is_favorite = 1")
-  LiveData<List<Apod>> getAndUpdateFavorites();
+  LiveData<List<Apod>> getFavorites();
 
 }

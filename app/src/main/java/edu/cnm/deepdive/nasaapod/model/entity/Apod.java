@@ -60,12 +60,8 @@ public class Apod {
   @Expose
   private String location;
 
-  @ColumnInfo(name = "date_taken")
-  @Expose
-  private LocalDate dateTaken;
-
   @ColumnInfo(name = "is_favorite")
-  private boolean isFavorite;
+  private boolean favorite;
 
   public long getId() {
     return id;
@@ -143,20 +139,12 @@ public class Apod {
     this.location = location;
   }
 
-  public LocalDate getDateTaken() {
-    return dateTaken;
-  }
-
-  public void setDateTaken(LocalDate dateTaken) {
-    this.dateTaken = dateTaken;
-  }
-
   public boolean isFavorite() {
-    return isFavorite;
+    return favorite;
   }
 
   public void setFavorite(boolean favorite) {
-    isFavorite = favorite;
+    this.favorite = favorite;
   }
 
   public enum MediaType {
