@@ -173,7 +173,7 @@ dependencies {
 }
 
 roomDdl {
-    source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.appstarter.service.LocalDatabase/1.json"))
+    source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.nasaapod.service.ApodDatabase/1.json"))
     destination.set(project.file("$projectDir/../docs/sql/ddl.sql"))
 }
 
