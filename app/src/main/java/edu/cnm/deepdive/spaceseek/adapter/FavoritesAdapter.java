@@ -35,7 +35,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     return favorites.size();
   }
 
-  static class ViewHolder extends RecyclerView.ViewHolder {
+  //made ViewHolder public to resolve visibility scope issue
+  public static class ViewHolder extends RecyclerView.ViewHolder {
     private final TextView favoriteTitle;
 
     public ViewHolder(@NonNull View itemView) {
