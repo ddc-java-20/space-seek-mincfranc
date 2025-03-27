@@ -31,10 +31,11 @@ public class HeaderBinder implements MonthHeaderFooterBinder<ViewContainer> {
 
   //a context parameter in Hilt can be an application class or an activity context
   @Inject
-  HeaderBinder(@NonNull @ActivityContext Context context) {
-    inflater = LayoutInflater.from(context);
+  public HeaderBinder(@NonNull LayoutInflater inflater, @NonNull @ActivityContext Context context) {
+    this.inflater = inflater;
     formatter = DateTimeFormatter.ofPattern(context.getString(R.string.year_month_format));
   }
+
 
   @NonNull
   @Override
