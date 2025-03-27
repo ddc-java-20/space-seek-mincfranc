@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.nasaapod.R;
 import edu.cnm.deepdive.nasaapod.adapter.FavoritesAdapter;
+import edu.cnm.deepdive.nasaapod.utils.RecyclerViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +30,8 @@ public class FavoritesFragment extends Fragment {
   }
 
   private void setupRecyclerView() {
-    // Initialize the adapter using the FavoritesAdapter from the adapter package
     adapter = new FavoritesAdapter(favoriteApods);
-    favoritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    favoritesRecyclerView.setAdapter(adapter);
+    RecyclerViewUtils.setupRecyclerView(getContext(), favoritesRecyclerView, adapter);
   }
 
   public void addFavorite(String apodTitle) {
