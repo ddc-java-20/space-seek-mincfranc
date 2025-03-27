@@ -32,14 +32,25 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupUI() {
+    // Inflate the layout using ViewBinding
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
   }
 
   private void setupNavigation() {
-    appBarConfig = new AppBarConfiguration.Builder(R.id.calendar_fragment).build();
-    navController = ((NavHostFragment) binding.navHostFragment.getFragment()) //cast binding to NavHostFragment
+    // Configure AppBar to include all top-level destinations
+    appBarConfig = new AppBarConfiguration.Builder(
+        R.id.calendar_fragment,
+        R.id.image_fragment,
+        R.id.settings_fragment,
+        R.id.favorites_fragment // Include FavoritesFragment as a top-level destination
+    ).build();
+
+    // Obtain the NavController from the NavHostFragment
+    navController = ((NavHostFragment) binding.navHostFragment.getFragment())
         .getNavController();
+
+    // Set up ActionBar with the NavController and AppBarConfiguration
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
   }
 

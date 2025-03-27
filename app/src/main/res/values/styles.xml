@@ -21,6 +21,14 @@
     <item name="colorOutOfMonth">@color/out_of_month</item>
   </style>
 
+  <style name="AppTheme_Light" parent="Theme.Material3.Light">
+    <item name="colorOutOfMonth">@color/out_of_month</item>
+  </style>
+
+  <style name="AppTheme_Dark" parent="Theme.Material3.Dark">
+    <item name="colorOutOfMonth">@color/out_of_month
+    </item> </style>
+
   <style name="CalendarDay">
     <item name="android:background">?android:selectableItemBackgroundBorderless</item>
   </style>
@@ -40,6 +48,5 @@
   <style name="CalendarTextAppearance.AvailableDay.OutOfMonth">
     <item name="android:textColor">?attr/colorOutOfMonth</item>
   </style>
-
 
 </resources>

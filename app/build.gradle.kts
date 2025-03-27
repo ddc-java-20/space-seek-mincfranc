@@ -102,7 +102,8 @@ dependencies {
     implementation(libs.lifecycle.livedata)
 
     // Preferences/settings components
-    implementation(libs.preference)
+    implementation(libs.preference) // Existing dependency via `libs.preference`
+    implementation("androidx.preference:preference:1.2.1") // Newly added for preferences support
 
     // Material Design components
     implementation(libs.material)
