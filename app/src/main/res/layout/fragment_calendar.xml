@@ -5,49 +5,21 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <!-- CalendarView for showing dates -->
   <com.kizitonwose.calendar.view.CalendarView
-    android:id="@+id/calendar"
+    android:id="@+id/calendar_view"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    app:cv_scrollPaged="true"
-    app:cv_dayViewResource="@layout/day_calendar"
-    app:cv_monthHeaderResource="@layout/header_calendar"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    app:layout_constraintEnd_toEndOf="parent"/>
 
-  <!-- LinearLayout for NumberPickers -->
-  <LinearLayout
-    android:id="@+id/year_month_picker"
-    android:layout_width="match_parent"
+  <TextView
+    android:id="@+id/selected_date_text"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center"
-    app:layout_constraintBottom_toBottomOf="parent"
+    android:text="@string/select_a_date"
+    app:layout_constraintTop_toBottomOf="@id/calendar_view"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
-
-    <!-- Year Picker -->
-    <NumberPicker
-      android:id="@+id/year_picker"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@android:color/black"/>
-
-    <!-- Month Picker -->
-    <NumberPicker
-      android:id="@+id/month_picker"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@android:color/black"/>
-
-    <!-- Day Picker -->
-    <NumberPicker
-      android:id="@+id/day_picker"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@android:color/black"/>
-  </LinearLayout>
+    app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

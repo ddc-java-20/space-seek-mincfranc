@@ -95,6 +95,16 @@ public class ApodViewModel extends ViewModel {
   }
 
   /**
+   * Retrieves the list of favorite APODs.
+   *
+   * @return LiveData containing the list of favorite APODs.
+   */
+  public LiveData<List<Apod>> getFavorites() {
+    // Fetch favorites from repository and return LiveData<List<Apod>>.
+    return repository.getFavorites();
+  }
+
+  /**
    * Fetches APODs for the user's birthdate across all years.
    *
    * @param dob The user's date of birth (formatted as "YYYY-MM-DD").
@@ -102,7 +112,7 @@ public class ApodViewModel extends ViewModel {
   @SuppressLint("CheckResult")
   public void fetchApodsForDateAcrossYears(String dob) {
     try {
-      LocalDate birthDate = LocalDate.parse(dob); // Parse user's DOB
+      LocalDate birthDate = LocalDate.parse(dob); // Parse user's DOB.
       repository.fetchApodsForDateAcrossYears(birthDate)
           .subscribe(
               () -> Log.d(TAG, "Personalized APODs fetched successfully."),
@@ -154,8 +164,7 @@ public class ApodViewModel extends ViewModel {
     repository.fetchRandomApods(count)
         .subscribe(
             () -> Log.d(TAG, "Random APODs fetched successfully."),
-            this::postThrowable // Handle errors
+            this::postThrowable // Handle errors.
         );
   }
-
 }

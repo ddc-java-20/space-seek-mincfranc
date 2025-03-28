@@ -27,15 +27,8 @@ public class ImageFragment extends Fragment {
   @Inject
   Picasso picasso;
 
-  private long apodId;
   private FragmentImageBinding binding;
 
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    apodId = ImageFragmentArgs.fromBundle(getArguments())
-        .getApodId();
-  }
 
   @Nullable
   @Override
@@ -53,7 +46,6 @@ public class ImageFragment extends Fragment {
     viewModel
         .getApod()
         .observe(getViewLifecycleOwner(), this::handleApod);
-    viewModel.setApodId(apodId);
   }
 
   @Override

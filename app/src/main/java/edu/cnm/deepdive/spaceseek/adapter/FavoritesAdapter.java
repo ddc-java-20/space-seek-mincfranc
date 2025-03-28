@@ -5,16 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import edu.cnm.deepdive.spaceseek.R;
-import java.util.List;
+import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
+public class FavoritesAdapter extends ListAdapter<Apod, FavoritesAdapter.ViewHolder> {
 
-  private final List<String> favorites;
-
-  public FavoritesAdapter(List<String> favorites) {
-    this.favorites = favorites;
+  public FavoritesAdapter() {
+    super(DIFF_CALLBACK);
   }
 
   @NonNull
@@ -27,21 +26,33 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    holder.favoriteTitle.setText(favorites.get(position));
+    holder.bind(getItem(position));
   }
 
-  @Override
-  public int getItemCount() {
-    return favorites.size();
-  }
+  static class ViewHolder extends RecyclerView.ViewHolder {
 
-  //made ViewHolder public to resolve visibility scope issue
-  public static class ViewHolder extends RecyclerView.ViewHolder {
     private final TextView favoriteTitle;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       favoriteTitle = itemView.findViewById(R.id.favorite_title);
     }
+
+    public void bind(Apod apod) {
+      favoriteTitle.setText(apod.getTitle());
+    }
   }
+
+  private static final DiffUtil.ItemCallback<Apod> DIFF_CALLBACK =
+      new DiffUtil.ItemCallback<Apod>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Apod oldItem, @NonNull Apod newItem) {
+          return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Apod oldItem, @NonNull Apod newItem) {
+          return oldItem.equals(newItem);
+        }
+      };
 }
