@@ -24,4 +24,15 @@ public interface ApodProxyService {
       @Query("start_date") LocalDate startDate,
       @Query("api_key") String apiKey);
 
+  @GET("apod")
+  Single<List<Apod>> getRandomApods(
+      @Query("count") int count, // Number of random APODs
+      @Query("api_key") String apiKey);
+
+  @GET("apod")
+  Single<List<Apod>> getSpecificDateAcrossYears(
+      @Query("start_date") LocalDate startDate,
+      @Query("end_date") LocalDate endDate,
+      @Query("api_key") String apiKey); // Fetch APODs for a specific date across all years
+
 }

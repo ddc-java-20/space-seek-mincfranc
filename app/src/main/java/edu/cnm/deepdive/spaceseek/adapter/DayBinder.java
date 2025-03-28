@@ -29,17 +29,23 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
   private final String apodTooltipFormat;
   private final String[] mediaTypes;
 
+  private final Drawable selectedCircle; // Drawable for selected date
+  private final Drawable rangeCircle;    // Drawable for date range
+
   private OnApodClickListener listener;
 
   @Inject
   public DayBinder(@ActivityContext Context context) {
     this.apodMap = new HashMap<>();
     apodTooltipFormat = context.getString(R.string.apod_tooltip_format);
-    mediaTypes = context
-        .getResources()
-        .getStringArray(R.array.media_types);
+    mediaTypes = context.getResources().getStringArray(R.array.media_types);
+
+    // Load drawables for selected date and date ranges
+    selectedCircle = context.getDrawable(R.drawable.selected_date_circle);
+    rangeCircle = context.getDrawable(R.drawable.circle_background);
+// TODO: 3/27/2025  reference shape from drawable for both circles 
     listener = (apod) -> {
-    };
+    }; // Initialize listener with a NO-OP action
   }
 
   @NotNull
@@ -63,30 +69,29 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
 
   @FunctionalInterface
   public interface OnApodClickListener {
-
     void onApodClick(Apod apod);
-
   }
 
   public class DayHolder extends ViewContainer {
 
     private static final OnClickListener NO_OP_LISTENER = (v) -> {
     };
-
     private final DayCalendarBinding binding;
-    private final Drawable clickableBackground;
 
     private Apod apod;
 
     public DayHolder(@NotNull View view) {
       super(view);
       binding = DayCalendarBinding.bind(view);
-      clickableBackground = view.getBackground();
     }
 
     public void bind(CalendarDay calendarDay) {
       TextView dayText = binding.getRoot();
       dayText.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
+
+      // Reset background and style
+      dayText.setBackground(null);
+
       // TODO: 2025-02-28 Use information from apodMap to modify style/content of widgets.
       Apod apod = apodMap.get(calendarDay.getDate());
       if (apod != null) {
@@ -95,7 +100,14 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
         dayText.setFocusable(true);
         dayText.setSoundEffectsEnabled(true);
         dayText.setOnClickListener(this::translateClick);
-        dayText.setBackground(clickableBackground);
+
+        // Apply appropriate appearance for selected date or date range
+        if (calendarDay.getDate().equals(apod.getDate())) {
+          dayText.setBackground(selectedCircle);
+        } else {
+          dayText.setBackground(rangeCircle);
+        }
+
         dayText.setTextAppearance(
             (calendarDay.getPosition() == DayPosition.MonthDate)
                 ? R.style.CalendarTextAppearance_AvailableDay
@@ -118,7 +130,5 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
     private void translateClick(View view) {
       listener.onApodClick(apod);
     }
-
   }
-
 }

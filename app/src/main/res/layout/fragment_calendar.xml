@@ -5,8 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <!--  TODO Reference header resource for the calendar.-->
-
+  <!-- CalendarView for showing dates -->
   <com.kizitonwose.calendar.view.CalendarView
     android:id="@+id/calendar"
     android:layout_width="0dp"
@@ -17,5 +16,38 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
+
+  <!-- LinearLayout for NumberPickers -->
+  <LinearLayout
+    android:id="@+id/year_month_picker"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <!-- Year Picker -->
+    <NumberPicker
+      android:id="@+id/year_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"/>
+
+    <!-- Month Picker -->
+    <NumberPicker
+      android:id="@+id/month_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"/>
+
+    <!-- Day Picker -->
+    <NumberPicker
+      android:id="@+id/day_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"/>
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

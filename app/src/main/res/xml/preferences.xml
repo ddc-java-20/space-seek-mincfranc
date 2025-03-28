@@ -13,11 +13,12 @@
     android:summary="Turn notifications on or off"
     android:defaultValue="true" />
 
+  <!-- Updated input type to text to ensure users can enter in ISO-8601 format -->
   <EditTextPreference
     android:key="dob"
     android:title="Date of Birth"
-    android:summary="Enter your date of birth"
+    android:summary="Enter your date of birth in YYYY-MM-DD format"
     android:dialogTitle="Date of Birth"
-    android:inputType="date" />
+    android:inputType="text"/>
 
 </PreferenceScreen>

@@ -18,4 +18,17 @@
 
  <color name="out_of_month">#FFB0B0B0</color>
 
+ <!-- activity_splash & activity_login use radial_opposite_gradient-->
+ <color name="nebula_black">#000000</color> <!-- Black for a starry effect -->
+ <color name="blazey_blue">#29C6D1</color>
+
+ <!-- background_opposite_gradient (nebula black & blazey_blue-->
+ <!-- background_gradient (blazey_blue & nebula black) -->
+ <color name="gradient_teal_start">#18B1A2</color> <!-- Smoky teal -->
+ <color name="gradient_teal_end">#009688</color>
+
+ <color name="button_text_color">#FF5722</color> <!-- placeholder color-->
+
+
 </resources>
+

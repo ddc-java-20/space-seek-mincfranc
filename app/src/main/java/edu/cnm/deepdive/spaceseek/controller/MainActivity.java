@@ -1,7 +1,9 @@
 package edu.cnm.deepdive.spaceseek.controller;
 
 import android.os.Bundle;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -9,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.databinding.ActivityMainBinding;
+import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -18,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
   private ActivityMainBinding binding;
   private NavController navController;
   private AppBarConfiguration appBarConfig;
+  private ApodViewModel viewModel;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setupUI();
-    setupNavigation();
+    setupUI(); // Inflate the layout and set the content view
+    setupNavigation(); // Configure navigation for the app
+    setupRandomApodFeature(); // Set up button for fetching random APODs
   }
 
   @Override
@@ -52,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
     // Set up ActionBar with the NavController and AppBarConfiguration
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
+  }
+
+  private void setupRandomApodFeature() {
+    // Initialize ViewModel for APOD operations
+    viewModel = new ViewModelProvider(this).get(ApodViewModel.class);
+
+    // Find the button in the layout and set up its functionality
+    Button randomButton = findViewById(R.id.random_button);
+    randomButton.setOnClickListener((view) -> {
+      // Fetch 5 random APODs when the button is clicked
+      viewModel.fetchRandomApods(5);
+    });
   }
 
 }
