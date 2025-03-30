@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.cnm.deepdive.spaceseek.adapter.FavoritesAdapter;
+import edu.cnm.deepdive.spaceseek.adapter.ListAdapter;
 import edu.cnm.deepdive.spaceseek.databinding.FragmentListBinding;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
@@ -22,12 +22,12 @@ public class ListFragment extends Fragment {
   private FragmentListBinding binding;
 
   private RecyclerView favoritesRecyclerView;
-  private FavoritesAdapter adapter;
+  private ListAdapter adapter;
   private ApodViewModel viewModel;
   private ListType listType;
 
   @Override
-  public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+  public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     listType = ListFragmentArgs.fromBundle(getArguments()).getListType();
   }
@@ -50,7 +50,7 @@ public class ListFragment extends Fragment {
   }
 
   private void setupRecyclerView(List<Apod> apods) {
-    adapter = new FavoritesAdapter(requireContext(), apods);
+    adapter = new ListAdapter(requireContext(), apods);
     binding.apods.setAdapter(adapter);
   }
 

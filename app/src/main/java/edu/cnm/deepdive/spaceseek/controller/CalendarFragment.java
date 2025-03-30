@@ -54,7 +54,7 @@ public class CalendarFragment extends Fragment {
 
     binding.calendarView.setDayBinder(new DayBinder(requireContext(), (day, apod) -> {
       if (apod != null) {
-        viewModel.fetchApodByDate(day.getDate());
+        viewModel.getApod(day());
       }
     }));
 

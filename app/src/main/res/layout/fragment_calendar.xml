@@ -17,9 +17,11 @@
     android:id="@+id/selected_date_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/select_a_date"
+
     app:layout_constraintTop_toBottomOf="@id/calendar_view"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!--TODO 3/29/25 Reference drawable & place this after layout_height in selected_date_text__ android:text="@string/select_a_date"-->

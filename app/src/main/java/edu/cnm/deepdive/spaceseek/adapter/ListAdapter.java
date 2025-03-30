@@ -10,12 +10,12 @@ import edu.cnm.deepdive.spaceseek.databinding.ItemApodBinding;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import java.util.List;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
   private final List<Apod> apods;
   private final LayoutInflater inflater;
 
-  public FavoritesAdapter(Context context, List<Apod> apods) {
+  public ListAdapter(Context context, List<Apod> apods) {
     inflater = LayoutInflater.from(context);
     this.apods = apods;
   }
