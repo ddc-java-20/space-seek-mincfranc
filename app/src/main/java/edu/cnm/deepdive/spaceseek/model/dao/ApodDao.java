@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,7 +23,15 @@ public interface ApodDao {
 
   // insert Method to insert list of Apods
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  Completable insert(Apod apod);
+  Single<Long> insert(Apod apod);
+
+  default Single<Apod> insertAndReturn(Apod apod) {
+    return insert(apod)
+        .map((id) -> {
+          apod.setId(Math.abs(id));
+          return apod;
+        });
+  }
 
   // deleteAll Method deletes all records from the apod table
 // Returns Completable to handle completion of delete method.

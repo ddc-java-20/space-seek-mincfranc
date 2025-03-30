@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import edu.cnm.deepdive.spaceseek.service.ApodRepository;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
@@ -26,16 +27,21 @@ public class ApodViewModel extends ViewModel {
   private final MutableLiveData<YearMonth> yearMonth;
   private final LiveData<List<Apod>> apods;
   private final MutableLiveData<Long> apodId;
+  private final MutableLiveData<Apod> randomApod;
   private final MutableLiveData<Throwable> throwable;
+  private final CompositeDisposable pending;
+
 
   @Inject
   ApodViewModel(ApodRepository repository) {
     this.repository = repository;
     yearMonth = new MutableLiveData<>(YearMonth.now());
     apodId = new MutableLiveData<>();
+    randomApod = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     apods = Transformations.switchMap(Transformations.distinctUntilChanged(yearMonth),
         this::transformYearMonthToQuery);
+    pending = new CompositeDisposable();
   }
 
   /**
@@ -53,7 +59,9 @@ public class ApodViewModel extends ViewModel {
    * @return LiveData containing the individual APOD details.
    */
   public LiveData<Apod> getApod() {
-    return Transformations.switchMap(Transformations.distinctUntilChanged(apodId), repository::get);
+    return Transformations
+        .switchMap(Transformations
+            .distinctUntilChanged(apodId), repository::get);
   }
 
   /**
@@ -63,6 +71,10 @@ public class ApodViewModel extends ViewModel {
    */
   public void setApodId(long apodId) {
     this.apodId.setValue(apodId);
+  }
+
+  public LiveData<Apod> getRandomApod() {
+    return randomApod;
   }
 
   /**
@@ -116,7 +128,8 @@ public class ApodViewModel extends ViewModel {
       repository.fetchApodsForDateAcrossYears(birthDate)
           .subscribe(
               () -> Log.d(TAG, "Personalized APODs fetched successfully."),
-              throwable -> Log.e(TAG, "Error fetching personalized APODs.", throwable)
+              this::postThrowable,
+              pending
           );
     } catch (Exception e) {
       Log.e(TAG, "Invalid DOB format: " + dob, e);
@@ -129,7 +142,6 @@ public class ApodViewModel extends ViewModel {
    * @param yearMonth The YearMonth for filtering APODs.
    * @return LiveData containing the list of APODs.
    */
-  @SuppressLint("CheckResult")
   private LiveData<List<Apod>> transformYearMonthToQuery(YearMonth yearMonth) {
     LocalDate startDate = yearMonth.minusMonths(1).atDay(1);
     LocalDate endDate = yearMonth.plusMonths(2).atDay(1);
@@ -139,7 +151,8 @@ public class ApodViewModel extends ViewModel {
         .subscribe(
             () -> {
             },
-            this::postThrowable
+            this::postThrowable,
+            pending
         );
     return repository.get(startDate, endDate);
   }
@@ -156,15 +169,13 @@ public class ApodViewModel extends ViewModel {
 
   /**
    * Fetches a random number of APODs.
-   *
-   * @param count The number of random APODs to fetch.
    */
-  @SuppressLint("CheckResult")
-  public void fetchRandomApods(int count) {
-    repository.fetchRandomApods(count)
+  public void fetchRandomApod() {
+    repository.fetchRandomApod()
         .subscribe(
-            () -> Log.d(TAG, "Random APODs fetched successfully."),
-            this::postThrowable // Handle errors.
+            apodId::postValue,
+            this::postThrowable,
+            pending
         );
   }
 }

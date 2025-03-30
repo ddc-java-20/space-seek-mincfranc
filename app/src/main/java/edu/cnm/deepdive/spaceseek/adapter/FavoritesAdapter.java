@@ -1,58 +1,56 @@
 package edu.cnm.deepdive.spaceseek.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
-import edu.cnm.deepdive.spaceseek.R;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import edu.cnm.deepdive.spaceseek.databinding.ItemApodBinding;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
+import java.util.List;
 
-public class FavoritesAdapter extends ListAdapter<Apod, FavoritesAdapter.ViewHolder> {
+public class FavoritesAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-  public FavoritesAdapter() {
-    super(DIFF_CALLBACK);
+  private final List<Apod> apods;
+  private final LayoutInflater inflater;
+
+  public FavoritesAdapter(Context context, List<Apod> apods) {
+    inflater = LayoutInflater.from(context);
+    this.apods = apods;
   }
 
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.item_favorite, parent, false);
-    return new ViewHolder(view);
+
+    return new Holder(ItemApodBinding.inflate(inflater, parent, false));
   }
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    holder.bind(getItem(position));
+    ((Holder) holder).bind(apods.get(position));
   }
 
-  static class ViewHolder extends RecyclerView.ViewHolder {
+  @Override
+  public int getItemCount() {
+    return apods.size();
+  }
 
-    private final TextView favoriteTitle;
+  private static class Holder extends ViewHolder {
 
-    public ViewHolder(@NonNull View itemView) {
-      super(itemView);
-      favoriteTitle = itemView.findViewById(R.id.favorite_title);
+    private final ItemApodBinding binding;
+
+    Holder(@NonNull ItemApodBinding binding) {
+      super(binding.getRoot());
+      this.binding = binding;
     }
 
-    public void bind(Apod apod) {
-      favoriteTitle.setText(apod.getTitle());
+    void bind(Apod apod) {
+      binding.title.setText(apod.getTitle());
+      // TODO: 3/29/2025 Set values of any other widgets, set listeners, ie turn off, and set date
     }
   }
 
-  private static final DiffUtil.ItemCallback<Apod> DIFF_CALLBACK =
-      new DiffUtil.ItemCallback<Apod>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Apod oldItem, @NonNull Apod newItem) {
-          return oldItem.getId() == newItem.getId();
-        }
 
-        @Override
-        public boolean areContentsTheSame(@NonNull Apod oldItem, @NonNull Apod newItem) {
-          return oldItem.equals(newItem);
-        }
-      };
 }

@@ -1,13 +1,13 @@
 package edu.cnm.deepdive.spaceseek.service;
 
 import android.content.Context;
-import android.util.Log;
 import androidx.lifecycle.LiveData;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.model.dao.ApodDao;
 import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,16 +48,15 @@ public class ApodRepository {
     return (endDate.isBefore(LocalDate.now())
         ? proxyService.getDateRange(validatedStartDate, endDate, apiKey)
         : proxyService.getOpenDateRange(validatedStartDate, apiKey))
-        .flatMapCompletable(apods -> apodDao.insert(apods))
-        .subscribeOn(scheduler)
-        .doOnError(throwable -> Log.e(TAG, "Error during fetch operation", throwable));
+        .flatMapCompletable(apodDao::insert)
+        .subscribeOn(scheduler);
   }
 
-  public Completable fetchRandomApods(int count) {
-    return proxyService.getRandomApods(count, apiKey)
-        .flatMapCompletable(apods -> apodDao.insert(apods))
-        .subscribeOn(scheduler)
-        .doOnError(throwable -> Log.e(TAG, "Error fetching random APODs", throwable));
+  public Single<Long> fetchRandomApod() {
+    return proxyService.getRandomApod(apiKey)
+        .flatMap(apodDao::insert)
+        .map(Math::abs)
+        .subscribeOn(scheduler);
   }
 
   public Completable fetchApodsForDateAcrossYears(LocalDate birthDate) {
@@ -65,10 +64,8 @@ public class ApodRepository {
     LocalDate endDate = birthDate.withYear(LocalDate.now().getYear());
 
     return proxyService.getSpecificDateAcrossYears(startDate, endDate, apiKey)
-        .flatMapCompletable(apods -> apodDao.insert(apods))
-        .subscribeOn(scheduler)
-        .doOnError(
-            throwable -> Log.e(TAG, "Error fetching APODs for date across years", throwable));
+        .flatMapCompletable(apodDao::insert)
+        .subscribeOn(scheduler);
   }
 
   public LiveData<Apod> get(long id) {

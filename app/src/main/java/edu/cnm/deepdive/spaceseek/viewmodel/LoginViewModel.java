@@ -16,6 +16,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javax.inject.Inject;
 
+/**
+ * @noinspection deprecation
+ */
 @HiltViewModel
 public class LoginViewModel extends AndroidViewModel implements DefaultLifecycleObserver {
 

@@ -22,5 +22,22 @@
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_graph"
     app:layout_constraintTop_toBottomOf="@id/toolbar"
+    app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"/>
+
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottom_navigation_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:layout_constraintBottom_toBottomOf="parent"/>
+  <!--    TODO 3/29/25 Add app:menu attr to refer to menu resource-->
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/show_random"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:useCompatPadding="true"
+    app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+    app:layout_constraintEnd_toEndOf="parent"/>
+  <!--  TODO 3/29/25 ADD DRAWABLE, & TOOLTIP, context description should be the exact same for both-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

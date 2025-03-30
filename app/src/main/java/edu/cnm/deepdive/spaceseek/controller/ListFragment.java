@@ -8,28 +8,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.adapter.FavoritesAdapter;
+import edu.cnm.deepdive.spaceseek.databinding.FragmentListBinding;
+import edu.cnm.deepdive.spaceseek.model.entity.Apod;
 import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
+import java.util.List;
+
 @AndroidEntryPoint
-public class FavoritesFragment extends Fragment {
+public class ListFragment extends Fragment {
+
+  private FragmentListBinding binding;
 
   private RecyclerView favoritesRecyclerView;
   private FavoritesAdapter adapter;
   private ApodViewModel viewModel;
+  private ListType listType;
+
+  @Override
+  public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    listType = ListFragmentArgs.fromBundle(getArguments()).getListType();
+  }
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_favorites, container,
-        false); // Corrected layout reference
-    favoritesRecyclerView = view.findViewById(R.id.favorites_recycler_view);
+    binding = FragmentListBinding.inflate(inflater, container, false);
     setupRecyclerView();
-    return view;
+    return binding.getRoot();
   }
 
   @Override
@@ -37,12 +46,16 @@ public class FavoritesFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(requireActivity()).get(ApodViewModel.class);
     viewModel.getFavorites().observe(getViewLifecycleOwner(),
-        (apods) -> adapter.submitList(apods)); // Updated method call
+        this::setupRecyclerView); // Updated method call
   }
 
-  private void setupRecyclerView() {
-    adapter = new FavoritesAdapter();
-    favoritesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-    favoritesRecyclerView.setAdapter(adapter);
+  private void setupRecyclerView(List<Apod> apods) {
+    adapter = new FavoritesAdapter(requireContext(), apods);
+    binding.apods.setAdapter(adapter);
+  }
+
+  public enum ListType {
+
+    FAVORITES, BIRTHDAY
   }
 }

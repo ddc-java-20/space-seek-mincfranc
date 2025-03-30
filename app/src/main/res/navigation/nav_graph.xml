@@ -11,7 +11,12 @@
 
   <action
     android:id="@+id/navigate_to_pre_login_fragment"
-    app:destination="@+id/pre_login_fragment"/>
+    app:destination="@+id/pre_login_fragment"
+    app:popUpTo="@id/nav_graph"/>
+
+  <action
+    android:id="@+id/navigate_to_image_fragment"
+    app:destination="@id/image_fragment"/>
 
   <!-- PreLoginFragment -->
   <fragment
@@ -20,10 +25,12 @@
     tools:layout="@layout/fragment_pre_login">
     <action
       android:id="@+id/navigate_to_login_fragment"
-      app:destination="@id/login_fragment"/>
+      app:destination="@id/login_fragment"
+      app:popUpTo="@id/nav_graph"/>
     <action
       android:id="@+id/navigate_to_image_fragment"
-      app:destination="@id/image_fragment"/>
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/nav_graph"/>
   </fragment>
 
   <!-- LoginFragment -->
@@ -33,41 +40,45 @@
     tools:layout="@layout/fragment_login">
     <action
       android:id="@+id/navigate_to_image_fragment"
-      app:destination="@id/image_fragment"/>
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/nav_graph"/>
   </fragment>
 
-  <!-- ImageFragment (Main Content or Home) -->
+  <!-- ImageFragment (Main Content) -->
   <fragment
     android:id="@+id/image_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ImageFragment"
-    tools:layout="@layout/fragment_image">
-    <action
-      android:id="@+id/navigate_to_calendar_fragment"
-      app:destination="@id/calendar_fragment"/>
-    <action
-      android:id="@+id/navigate_to_favorites_fragment"
-      app:destination="@id/favorites_fragment"/>
-  </fragment>
+    tools:layout="@layout/fragment_image"/>
 
   <!-- CalendarFragment -->
   <fragment
     android:id="@+id/calendar_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.CalendarFragment"
-    tools:layout="@layout/fragment_calendar">
-    <action
-      android:id="@+id/navigate_to_image_fragment"
-      app:destination="@id/image_fragment"/>
-  </fragment>
+    tools:layout="@layout/fragment_calendar"/>
 
   <!-- FavoritesFragment -->
   <fragment
     android:id="@+id/favorites_fragment"
-    android:name="edu.cnm.deepdive.spaceseek.controller.FavoritesFragment"
-    tools:layout="@layout/fragment_favorites">
-    <action
-      android:id="@+id/navigate_to_image_fragment"
-      app:destination="@id/image_fragment"/>
+    android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"
+    tools:layout="@layout/fragment_list">
+
+    <argument
+      android:name="list_type"
+      app:argType="edu.cnm.deepdive.spaceseek.controller.ListFragment$ListType"
+      android:defaultValue="FAVORITES"/>
   </fragment>
+
+  <fragment
+    android:id="@+id/birthday_fragment"
+    android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"
+    tools:layout="@layout/fragment_list">
+
+    <argument
+      android:name="list_type"
+      app:argType="edu.cnm.deepdive.spaceseek.controller.ListFragment$ListType"
+      android:defaultValue="BIRTHDAY"/>
+  </fragment>
+
 
   <!-- SettingsFragment -->
   <fragment

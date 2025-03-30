@@ -10,7 +10,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import dagger.hilt.android.qualifiers.ApplicationContext;
-import edu.cnm.deepdive.spaceseek.R;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
@@ -18,6 +17,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * @noinspection deprecation
+ */
 @Singleton
 public class AuthService {
 
@@ -29,7 +31,6 @@ public class AuthService {
         GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .requestProfile()
-        .requestIdToken(context.getString(R.string.client_id)) // Replace with your Web Client ID
         .build();
     client = GoogleSignIn.getClient(context, options);
   }

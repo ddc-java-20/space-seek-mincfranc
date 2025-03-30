@@ -30,6 +30,10 @@ public interface ApodProxyService {
       @Query("api_key") String apiKey);
 
   @GET("apod")
+  Single<Apod> getRandomApod(
+      @Query("api_key") String apiKey);
+
+  @GET("apod")
   Single<List<Apod>> getSpecificDateAcrossYears(
       @Query("start_date") LocalDate startDate,
       @Query("end_date") LocalDate endDate,

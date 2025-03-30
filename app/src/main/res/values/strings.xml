@@ -22,6 +22,7 @@
   <string name="apod_tooltip_format">[%1$s] %2$s</string>
   <string name="settings_label">Settings</string>
   <string name="fetch_random_apods">"Pick a random APoD. Who cares "</string>
+  <string name="sign_out_title">Sign out</string>
 
   <!-- Arrays -->
   <string-array name="media_types">
