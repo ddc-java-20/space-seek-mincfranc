@@ -19,8 +19,8 @@ import javax.inject.Singleton;
 @Singleton
 public class ApodRepository {
 
-  private static final LocalDate SERVICE_START_DATE = LocalDate.of(1995, 6, 16);
   private static final String TAG = ApodRepository.class.getSimpleName();
+
 
   private final ApodProxyService proxyService;
   private final ApodDao apodDao;
@@ -39,6 +39,7 @@ public class ApodRepository {
     this.apodDao = apodDao;
     this.firstApodDate = LocalDate.parse(context.getString(R.string.first_apod_date));
     this.apiKey = context.getString(R.string.api_key);
+
   }
 
   public Completable fetch(LocalDate startDate, LocalDate endDate) {
@@ -60,7 +61,7 @@ public class ApodRepository {
   }
 
   public Completable fetchApodsForDateAcrossYears(LocalDate birthDate) {
-    LocalDate startDate = birthDate.withYear(SERVICE_START_DATE.getYear());
+    LocalDate startDate = birthDate.withYear(firstApodDate.getYear());
     LocalDate endDate = birthDate.withYear(LocalDate.now().getYear());
 
     return proxyService.getSpecificDateAcrossYears(startDate, endDate, apiKey)

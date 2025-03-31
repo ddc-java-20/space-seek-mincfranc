@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setupUI(); // Inflate the layout and set the content view
     setupNavigation(); // Configure navigation for the app
-    setupRandomApodFeature(); // Set up button for fetching random APODs
+//    setupRandomApodFeature(); // Set up button for fetching random APODs
   }
 
   @Override
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
   }
+
 
   private void setupViewModel() {
     ViewModelProvider provider = new ViewModelProvider(this);
@@ -72,9 +73,8 @@ public class MainActivity extends AppCompatActivity {
     // Configure AppBar to include all top-level destinations
     appBarConfig = new AppBarConfiguration.Builder(
         R.id.calendar_fragment,
-        R.id.image_fragment,
-        R.id.settings_fragment,
-        R.id.favorites_fragment // Include FavoritesFragment as a top-level destination
+        R.id.favorites_fragment,
+        R.id.birthday_fragment
     ).build();
 
     // Obtain the NavController from the NavHostFragment
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Set up ActionBar with the NavController and AppBarConfiguration
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
+    NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
   }
 
 //  private void setupRandomApodFeature() {

@@ -56,7 +56,7 @@
     android:name="edu.cnm.deepdive.spaceseek.controller.CalendarFragment"
     tools:layout="@layout/fragment_calendar"/>
 
-  <!-- FavoritesFragment -->
+  <!-- ListFragment for Favorites -->
   <fragment
     android:id="@+id/favorites_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"
@@ -68,6 +68,8 @@
       android:defaultValue="FAVORITES"/>
   </fragment>
 
+
+  <!-- ListFragment for Birthday -->
   <fragment
     android:id="@+id/birthday_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"

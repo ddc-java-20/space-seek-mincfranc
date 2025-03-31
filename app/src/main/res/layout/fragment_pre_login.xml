@@ -8,12 +8,14 @@
   android:background="@drawable/background_opposite_gradient">
 
   <!-- App Launcher Icon -->
-  <ImageView
-    android:id="@+id/launcher_icon"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_launcher_foreground"
-    android:contentDescription="@string/app_logo_description"/>
+  <!--
+    <ImageView
+      android:id="@+id/launcher_icon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_launcher_foreground"
+      android:contentDescription="@string/app_logo_description"/>
+  -->
 
   <!-- Loading Indicator -->
   <ProgressBar

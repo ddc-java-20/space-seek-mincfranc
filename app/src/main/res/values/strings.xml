@@ -23,6 +23,10 @@
   <string name="settings_label">Settings</string>
   <string name="fetch_random_apods">"Pick a random APoD. Who cares "</string>
   <string name="sign_out_title">Sign out</string>
+  <string name="calendar_nav_title">Calendar</string>
+  <string name="favorites_nav_title">Favorites</string>
+  <string name="birthday_nav_title">Birthday APoDs</string>
+  <string name="sign_in_failure_message">Unable to sign in with provided credentials.</string>
 
   <!-- Arrays -->
   <string-array name="media_types">

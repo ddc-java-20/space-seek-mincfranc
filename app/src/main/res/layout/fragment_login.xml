@@ -8,13 +8,15 @@
   android:background="@drawable/background_opposite_gradient">
 
   <!-- App Logo -->
-  <ImageView
-    android:id="@+id/app_logo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/app_logo"
-    android:contentDescription="@string/app_logo_description"
-    android:layout_marginBottom="32dp"/>
+  <!--
+    <ImageView
+      android:id="@+id/app_logo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/app_logo"
+      android:contentDescription="@string/app_logo_description"
+      android:layout_marginBottom="32dp"/>
+  -->
 
   <!-- Google Sign-In Button -->
   <com.google.android.gms.common.SignInButton
