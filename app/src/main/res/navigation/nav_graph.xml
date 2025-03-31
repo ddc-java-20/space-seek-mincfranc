@@ -48,24 +48,45 @@
   <fragment
     android:id="@+id/image_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ImageFragment"
-    tools:layout="@layout/fragment_image"/>
+    tools:layout="@layout/fragment_image">
+    <action
+      android:id="@+id/navigate_to_favorites_fragment"
+      app:destination="@+id/favorites_fragment"
+      app:popUpTo="@id/nav_graph"/>
+    <action
+      android:id="@+id/navigate_to_calendar_fragment"
+      app:destination="@+id/calendar_fragment"
+      app:popUpTo="@id/nav_graph"/>
+    <action
+      android:id="@+id/navigate_to_birthday_fragment"
+      app:destination="@+id/birthday_fragment"
+      app:popUpTo="@id/nav_graph"/>
+  </fragment>
 
   <!-- CalendarFragment -->
   <fragment
     android:id="@+id/calendar_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.CalendarFragment"
-    tools:layout="@layout/fragment_calendar"/>
+    tools:layout="@layout/fragment_calendar">
+    <action
+      android:id="@+id/navigate_to_image_fragment"
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/image_fragment"/>
+  </fragment>
 
   <!-- ListFragment for Favorites -->
   <fragment
     android:id="@+id/favorites_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"
     tools:layout="@layout/fragment_list">
-
     <argument
       android:name="list_type"
       app:argType="edu.cnm.deepdive.spaceseek.controller.ListFragment$ListType"
       android:defaultValue="FAVORITES"/>
+    <action
+      android:id="@+id/navigate_to_image_fragment"
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/image_fragment"/>
   </fragment>
 
 
@@ -74,17 +95,24 @@
     android:id="@+id/birthday_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.ListFragment"
     tools:layout="@layout/fragment_list">
-
     <argument
       android:name="list_type"
       app:argType="edu.cnm.deepdive.spaceseek.controller.ListFragment$ListType"
       android:defaultValue="BIRTHDAY"/>
+    <action
+      android:id="@+id/navigate_to_image_fragment"
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/image_fragment"/>
   </fragment>
-
 
   <!-- SettingsFragment -->
   <fragment
     android:id="@+id/settings_fragment"
     android:name="edu.cnm.deepdive.spaceseek.controller.SettingsFragment"
-    tools:layout="@layout/fragment_settings"/>
+    tools:layout="@layout/fragment_settings">
+    <action
+      android:id="@+id/navigate_to_image_fragment"
+      app:destination="@id/image_fragment"
+      app:popUpTo="@id/image_fragment"/>
+  </fragment>
 </navigation>

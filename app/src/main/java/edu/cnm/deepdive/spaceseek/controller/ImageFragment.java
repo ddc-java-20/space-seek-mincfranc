@@ -29,7 +29,6 @@ public class ImageFragment extends Fragment {
 
   private FragmentImageBinding binding;
 
-
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,6 +45,7 @@ public class ImageFragment extends Fragment {
     viewModel
         .getApod()
         .observe(getViewLifecycleOwner(), this::handleApod);
+
   }
 
   @Override

@@ -66,7 +66,6 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
 
   @FunctionalInterface
   public interface OnApodClickListener {
-
     void onApodClick(Apod apod);
   }
 
