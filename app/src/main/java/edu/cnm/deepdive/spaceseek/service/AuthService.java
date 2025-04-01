@@ -2,6 +2,7 @@ package edu.cnm.deepdive.spaceseek.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -50,9 +51,17 @@ public class AuthService {
     return Single.create((SingleEmitter<GoogleSignInAccount> emitter) -> {
       client.silentSignIn()
           .addOnSuccessListener(emitter::onSuccess)
-          .addOnFailureListener(emitter::onError);
+          .addOnFailureListener(e -> {
+            if (e instanceof ApiException) {
+              Log.e("AuthError", "Silent sign-in failed: " + ((ApiException) e).getStatusCode());
+            } else {
+              Log.e("AuthError", "Unknown sign-in failure", e);
+            }
+            emitter.onError(e);
+          });
     }).subscribeOn(Schedulers.io());
   }
+
 
   /**
    * Launches the Google Sign-In intent using the provided ActivityResultLauncher.
@@ -78,6 +87,9 @@ public class AuthService {
         emitter.onSuccess(account);
       } catch (ApiException e) {
         emitter.onError(e);
+      } catch (Exception e) {
+        Log.e("AuthError", "Unexpected sign-in error", e);
+        emitter.onError(e);
       }
     }).subscribeOn(Schedulers.io());
   }
@@ -92,7 +104,11 @@ public class AuthService {
     return Completable.create((emitter) -> {
       client.signOut()
           .addOnSuccessListener((ignored) -> emitter.onComplete())
-          .addOnFailureListener(emitter::onError);
+          .addOnFailureListener(e -> {
+            Log.e("AuthError", "Sign-out failed", e);
+            emitter.onError(e);
+          });
     }).subscribeOn(Schedulers.io());
   }
+
 }

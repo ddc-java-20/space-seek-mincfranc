@@ -25,12 +25,12 @@ public class ApodViewModel extends ViewModel {
 
   private final ApodRepository repository;
   private final MutableLiveData<YearMonth> yearMonth;
-  private final LiveData<List<Apod>> apods;
   private final MutableLiveData<Long> apodId;
   private final MutableLiveData<Apod> randomApod;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
 
+  private final LiveData<List<Apod>> apods;
 
   @Inject
   ApodViewModel(ApodRepository repository) {
