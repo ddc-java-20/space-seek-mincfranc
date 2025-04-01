@@ -49,7 +49,8 @@ public class ApodRepository {
     return (endDate.isBefore(LocalDate.now())
         ? proxyService.getDateRange(validatedStartDate, endDate, apiKey)
         : proxyService.getOpenDateRange(validatedStartDate, apiKey))
-        .flatMapCompletable(apodDao::insert)
+        .flatMapCompletable(apods ->
+            apodDao.insert(apods))
         .subscribeOn(scheduler);
   }
 

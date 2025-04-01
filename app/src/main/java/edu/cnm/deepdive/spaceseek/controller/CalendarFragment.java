@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.kizitonwose.calendar.core.CalendarMonth;
 import dagger.hilt.android.AndroidEntryPoint;
+import edu.cnm.deepdive.spaceseek.NavGraphDirections;
 import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.adapter.DayBinder;
 import edu.cnm.deepdive.spaceseek.adapter.HeaderBinder;
@@ -53,8 +55,14 @@ public class CalendarFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    LifecycleOwner owner = getViewLifecycleOwner();
     viewModel = new ViewModelProvider(requireActivity()).get(ApodViewModel.class);
-    setupCalendar();
+    viewModel
+        .getApodMap()
+        .observe(owner, this::handleApods);
+    viewModel
+        .getYearMonth()
+        .observe(owner, this::handleYearMonth);
   }
 
   @Override
@@ -74,6 +82,7 @@ public class CalendarFragment extends Fragment {
     binding.calendarView.setup(currentMonth.minusMonths(6), currentMonth.plusMonths(6),
         today.getDayOfWeek());
     binding.calendarView.scrollToMonth(currentMonth);
+    dayBinder.setListener(this::showApod);
 
     binding.calendarView.setDayBinder(dayBinder);
 
@@ -97,8 +106,9 @@ public class CalendarFragment extends Fragment {
 
   private void showApod(Apod apod) {
     if (apod.getMediaType() == MediaType.IMAGE) {
-//      Navigation.findNavController(binding.getRoot())
-//          .navigate(CalendarFragmentDirections.showImage(apod.getId()));
+      viewModel.setApodId(apod.getId());
+      Navigation.findNavController(binding.getRoot())
+          .navigate(NavGraphDirections.navigateToImageFragment());
     } else {
       Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(apod.getLowDefUrl().toString()));
       startActivity(intent);

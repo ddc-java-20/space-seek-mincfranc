@@ -6,7 +6,6 @@
   <string name="image_load_error_message">Entropy wins(no image loaded)</string>
   <string name="image_error_message">Galactic Graveyard of APoDs</string>
   <string name="sign_in_with_google"> Enter your Google credentials. No one can hear you unsubscribe in space anyway..</string>
-  <string name="sign_out_title">Sign out</string>
 
   <!-- APOD Screen Strings -->
   <string name="apod_title">NASA Astronomy Picture of the Day</string>

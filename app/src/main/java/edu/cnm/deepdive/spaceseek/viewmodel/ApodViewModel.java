@@ -39,9 +39,9 @@ public class ApodViewModel extends ViewModel {
     apodId = new MutableLiveData<>();
     randomApod = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
+    pending = new CompositeDisposable();
     apods = Transformations.switchMap(Transformations.distinctUntilChanged(yearMonth),
         this::transformYearMonthToQuery);
-    pending = new CompositeDisposable();
   }
 
   /**

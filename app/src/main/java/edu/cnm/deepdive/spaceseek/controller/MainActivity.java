@@ -1,11 +1,9 @@
 package edu.cnm.deepdive.spaceseek.controller;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.window.OnBackInvokedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
   private AppBarConfiguration appBarConfig;
   private LoginViewModel loginViewModel;
   private ApodViewModel apodViewModel;
+
   /**
    * @noinspection deprecation
    */
@@ -41,15 +40,16 @@ public class MainActivity extends AppCompatActivity {
     setupUI(); // Inflate the layout and set the content view
     setupNavigation(); // Configure navigation for the app
     setupViewModel();
-    setupRandomApodFeature();
-
+//    setupRandomApodButton();
     // Back Navigation Handling for API 33+
+/*
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
           OnBackInvokedDispatcher.PRIORITY_DEFAULT,
           () -> navController.navigateUp()  //Ensures correct navigation instead of app closing
       );
     }
+*/
   }
 
   @Override
@@ -72,11 +72,10 @@ public class MainActivity extends AppCompatActivity {
         .observe(this, account -> {
           binding.bottomNavigationView.setVisibility(account == null ? View.GONE : View.VISIBLE);
           this.account = account;
-          invalidateMenu();
+          invalidateOptionsMenu();
           //If account is null and in other fragments not pre-login or login, then navigate to pre-login
           int currentDest = navController.getCurrentDestination().getId();
-          if (account == null && currentDest != R.id.pre_login_fragment
-              && currentDest != R.id.login_fragment) {
+          if (currentDest != R.id.pre_login_fragment && currentDest != R.id.login_fragment) {
             navController.navigate(R.id.pre_login_fragment);
           }
         });
@@ -99,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
     NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
   }
 
-  private void setupRandomApodFeature() {
-    binding.randomButton.setOnClickListener(view -> apodViewModel.fetchRandomApod());
-  }
+//  private void setupRandomApodButton() {
+//    binding.randomButton.setOnClickListener(view -> apodViewModel.fetchRandomApod());
+//  }
 
 
   //Show or hide sign out menu option depending on whether account field is null or not
