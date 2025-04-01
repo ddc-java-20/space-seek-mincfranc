@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <SwitchPreferenceCompat
     android:key="dark_mode"
@@ -14,11 +15,16 @@
     android:defaultValue="true" />
 
   <!-- Updated input type to text to ensure users can enter in ISO-8601 format -->
-  <EditTextPreference
+  <edu.cnm.deepdive.spaceseek.ui.prefs.custom.DatePreference
     android:key="dob"
     android:title="Date of Birth"
-    android:summary="Enter your date of birth in YYYY-MM-DD format"
-    android:dialogTitle="Date of Birth"
-    android:inputType="text"/>
+    android:summary="Select your date of birth"
+    android:defaultValue=""
+    app:iconSpaceReserved="false"
+    android:dialogTitle="Date of Birth"/>
+
 
 </PreferenceScreen>
+
+
+

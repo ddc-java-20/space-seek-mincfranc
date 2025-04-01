@@ -26,8 +26,19 @@ public class ImageFragment extends Fragment {
 
   @Inject
   Picasso picasso;
-
   private FragmentImageBinding binding;
+  private ApodViewModel viewModel;
+  private long apodId;
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      apodId = ImageFragmentArgs.fromBundle(getArguments()).getApodId();
+    } else {
+      apodId = 0;
+    }
+  }
 
   @Nullable
   @Override
@@ -40,12 +51,11 @@ public class ImageFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    ApodViewModel viewModel = new ViewModelProvider(requireActivity())
-        .get(ApodViewModel.class);
+    ApodViewModel viewModel = new ViewModelProvider(requireActivity()).get(ApodViewModel.class);
+    viewModel.setApodId(apodId);
     viewModel
         .getApod()
         .observe(getViewLifecycleOwner(), this::handleApod);
-
   }
 
   @Override
@@ -74,7 +84,6 @@ public class ImageFragment extends Fragment {
     @Override
     public void onSuccess() {
       binding.loadingIndicator.setVisibility(View.GONE);
-
     }
 
     //this will return an instance of snackbar, this isn't a static method
@@ -87,6 +96,5 @@ public class ImageFragment extends Fragment {
           .show();
     }
   }
-
 
 }

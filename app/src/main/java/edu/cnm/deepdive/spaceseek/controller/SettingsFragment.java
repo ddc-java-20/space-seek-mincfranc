@@ -1,17 +1,20 @@
 package edu.cnm.deepdive.spaceseek.controller;
 
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import org.jetbrains.annotations.NotNull;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -20,8 +23,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
   @Override
   public void onCreatePreferences(@Nullable Bundle savedInstanceState, String rootKey) {
-    setPreferencesFromResource(R.xml.preferences, rootKey); // Load preferences dynamically
-    setupDobPreference();
+    setPreferencesFromResource(R.xml.preferences, rootKey); // Loads preferences dynamically
   }
 
   @Override
@@ -35,11 +37,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
           applyTheme(isDarkMode);
           break;
         case "notifications":
-          // Future notification handling here
+          // TODO: 4/1/2025 Future notification handling here
           break;
-        case "dob":
+        case "dob": //Handles DatePreference instead of manual input TextPreference
           String dob = sharedPreferences.getString(key, "");
-          if (dob != null && isValidDate(dob)) {
+          if (isValidDate(dob)) {
             fetchPersonalizedApods(dob);
           } else {
             Log.w(TAG, "Invalid date format for DOB: " + dob);
@@ -57,12 +59,28 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     preferences.unregisterOnSharedPreferenceChangeListener(listener);
   }
 
-  private void setupDobPreference() {
-    EditTextPreference dobPreference = findPreference("dob");
-    if (dobPreference != null) {
-      dobPreference.setOnBindEditTextListener(editText ->
-          editText.setHint("YYYY-MM-DD")); // Set placeholder for correct format
+  @Override
+  public void onDisplayPreferenceDialog(@NonNull @NotNull Preference preference) {
+    if ("dob".equals(preference.getKey())) {
+      showDatePickerDialog(preference); // Opens DatePickerDialog
+    } else {
+      super.onDisplayPreferenceDialog(preference);
     }
+  }
+
+  private void showDatePickerDialog(Preference preference) {
+    // Retrieves saved DOB or defaults to today's date
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(
+        requireContext());
+    String savedDate = sharedPreferences.getString("dob", "");
+    LocalDate defaultDate = savedDate.isEmpty() ? LocalDate.now() : LocalDate.parse(savedDate);
+
+    // Displays DatePickerDialog with correct initial selection
+    new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
+      String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+      sharedPreferences.edit().putString("dob", selectedDate).apply();
+      preference.setSummary(selectedDate); // Updates preference UI immediately
+    }, defaultDate.getYear(), defaultDate.getMonthValue() - 1, defaultDate.getDayOfMonth()).show();
   }
 
   private boolean isValidDate(String dob) {

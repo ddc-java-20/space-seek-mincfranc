@@ -30,6 +30,7 @@
     </item>
   </style>
 
+  <!--  Calendar Styles -->
   <style name="CalendarDay">
     <item name="android:background">?android:selectableItemBackgroundBorderless</item>
   </style>

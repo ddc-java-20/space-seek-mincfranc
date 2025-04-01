@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.spaceseek.adapter.ListAdapter;
@@ -38,6 +39,12 @@ public class ListFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     binding = FragmentListBinding.inflate(inflater, container, false);
     return binding.getRoot();
+  }
+
+  private void onApodSelected(Apod apod) {
+    Navigation.findNavController(binding.getRoot())
+        .navigate(ListFragmentDirections.navigateToImageFragment(
+            apod.getId())); //Ensures correct APOD is loaded
   }
 
   @Override
