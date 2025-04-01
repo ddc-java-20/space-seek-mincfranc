@@ -7,6 +7,7 @@
     android:maxSdkVersion="33"
     android:name="android.permission.POST_NOTIFICATIONS"/>
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
   <application
     android:allowBackup="false"
@@ -16,7 +17,14 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
+    android:usesCleartextTraffic="true"
     tools:ignore="AllowBackup,DataExtractionRules">
+
+    <!-- Google Sign-In Hub Activity (Required for Sign-In Flow) -->
+    <activity
+      android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+      android:excludeFromRecents="true"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
     <!-- Main Activity -->
     <activity

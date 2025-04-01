@@ -1,9 +1,11 @@
 package edu.cnm.deepdive.spaceseek.controller;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.window.OnBackInvokedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,7 +40,16 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setupUI(); // Inflate the layout and set the content view
     setupNavigation(); // Configure navigation for the app
-//    setupRandomApodFeature(); // Set up button for fetching random APODs
+    setupViewModel();
+    setupRandomApodFeature();
+
+    // Back Navigation Handling for API 33+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+          OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+          () -> navController.navigateUp()  //Ensures correct navigation instead of app closing
+      );
+    }
   }
 
   @Override
@@ -47,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupUI() {
-    // Inflate the layout using ViewBinding
+    // Inflated the layout using ViewBinding
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
   }
@@ -62,58 +73,65 @@ public class MainActivity extends AppCompatActivity {
           binding.bottomNavigationView.setVisibility(account == null ? View.GONE : View.VISIBLE);
           this.account = account;
           invalidateMenu();
-          // TODO: 3/29/2025 If account is null and in other fragments not prelogin or login, then navigate to prelogin 
+          //If account is null and in other fragments not pre-login or login, then navigate to pre-login
+          int currentDest = navController.getCurrentDestination().getId();
+          if (account == null && currentDest != R.id.pre_login_fragment
+              && currentDest != R.id.login_fragment) {
+            navController.navigate(R.id.pre_login_fragment);
+          }
         });
-
     apodViewModel = provider.get(ApodViewModel.class);
   }
 
   
   private void setupNavigation() {
-    // Configure AppBar to include all top-level destinations
+    // Configured AppBar to include all top-level destinations
     appBarConfig = new AppBarConfiguration.Builder(
         R.id.calendar_fragment,
         R.id.favorites_fragment,
         R.id.birthday_fragment
     ).build();
-
-    // Obtain the NavController from the NavHostFragment
+    // Obtained the NavController from the NavHostFragment
     navController = ((NavHostFragment) binding.navHostFragment.getFragment())
         .getNavController();
-
     // Set up ActionBar with the NavController and AppBarConfiguration
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
     NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
   }
 
-//  private void setupRandomApodFeature() {
-    // Initialize ViewModel for APOD operations
-//    viewModel = new ViewModelProvider(this).get(ApodViewModel.class);
-
-    // Find the button in the layout and set up its functionality
-//    Button randomButton = findViewById(R.id.random_button);
-//    randomButton.setOnClickListener((view) -> {
-      // Fetch 5 random APODs when the button is clicked
-//      viewModel.fetchRandomApods(5);
-//    });
-//  }
-
-
-  @Override
-  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    return super.onOptionsItemSelected(item);
-    // TODO: 3/29/2025 Check to see if signout option was selected, if so, invoke viewModelSignOut, viewModel will be doing the sign out 
+  private void setupRandomApodFeature() {
+    binding.randomButton.setOnClickListener(view -> apodViewModel.fetchRandomApod());
   }
 
+
+  //Show or hide sign out menu option depending on whether account field is null or not
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
+    if (menu != null) {
+      MenuItem signOutItem = menu.findItem(R.id.sign_out);
+      if (signOutItem != null) {
+        signOutItem.setVisible(account != null);
+      }
+    }
     return super.onPrepareOptionsMenu(menu);
-    // TODO: 3/29/2025 Show or hide sign out menu option depending on whether account field is null or not 
   }
 
+  // Used getMenuInflater to inflate the menu resource with sign out option and attach to this menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_options, menu);
     return super.onCreateOptionsMenu(menu);
-    // TODO: 3/29/2025 Use getMenuInflater to inflate the menu resource with sign out option and attach to this menu 
   }
+
+
+  //  Check to see if sign_out option was selected, if so, invoke viewModelSignOut, viewModel will be doing the sign-out
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == R.id.sign_out) {
+      loginViewModel.signOut();
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
 }
