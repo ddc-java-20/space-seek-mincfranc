@@ -32,11 +32,13 @@ public class PreLoginFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
     Timer timer = new Timer();
     timer.schedule(new TimerTask() {
+
       @Override
       public void run() {
-        checkLoginState();
+        requireActivity().runOnUiThread(PreLoginFragment.this::checkLoginState);
       }
     }, 3000);
   }
@@ -50,7 +52,7 @@ public class PreLoginFragment extends Fragment {
   }
 
   private void handleAccount(GoogleSignInAccount account) {
-    if (account != null) {
+    if (account != null && root != null) {
       Navigation.findNavController(root)
           .navigate(PreLoginFragmentDirections.navigateToImageFragment());
     }
