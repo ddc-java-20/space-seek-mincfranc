@@ -26,8 +26,7 @@ public class DayBinder implements MonthDayBinder<ViewContainer> {
   private static final String TAG = DayBinder.class.getSimpleName();
 
   private final Map<LocalDate, Apod> apodMap;
-  /*  private final Drawable selectedCircle;
-    private final Drawable rangeCircle;*/
+  // TODO: 4/1/2025 private final Drawable selectedCircle; private final Drawable rangeCircle;  to highlight selected calendar date*/
   private final String apodTooltipFormat;
   private final String[] mediaTypes;
 

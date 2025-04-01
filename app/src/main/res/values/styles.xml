@@ -27,7 +27,8 @@
 
   <style name="AppTheme_Dark" parent="Theme.Material3.Dark">
     <item name="colorOutOfMonth">@color/out_of_month
-    </item> </style>
+    </item>
+  </style>
 
   <style name="CalendarDay">
     <item name="android:background">?android:selectableItemBackgroundBorderless</item>

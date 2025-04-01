@@ -8,7 +8,7 @@
   android:background="@drawable/background_opposite_gradient">
 
   <!-- App Launcher Icon -->
-  <!--
+  <!-- DO NOT NEED BACKGROUND FOR THIS?
     <ImageView
       android:id="@+id/launcher_icon"
       android:layout_width="wrap_content"
