@@ -14,6 +14,16 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
   private final List<Apod> apods;
   private final LayoutInflater inflater;
+  private OnItemClickListener listener; //Added listener interface
+
+  public interface OnItemClickListener {
+
+    void onItemClick(Apod apod);
+  }
+
+  public void setOnItemClickListener(OnItemClickListener listener) {
+    this.listener = listener;
+  }
 
   public ListAdapter(Context context, List<Apod> apods) {
     inflater = LayoutInflater.from(context);
@@ -23,7 +33,6 @@ public class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
     return new Holder(ItemApodBinding.inflate(inflater, parent, false));
   }
 

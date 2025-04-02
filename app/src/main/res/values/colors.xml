@@ -29,6 +29,7 @@
 
  <color name="button_text_color">#FF5722</color> <!-- placeholder color-->
 
+  <color name="navigation_item_icon_tint">#888888</color> <!-- Light gray for icons -->
 
 </resources>
 

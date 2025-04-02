@@ -57,8 +57,7 @@
 
     <argument
       android:name="apodId"
-      app:argType="long"
-      android:defaultValue="0"/>
+      app:argType="long"/>
 
     <!-- Step 4: User can navigate to other sections from here -->
     <action

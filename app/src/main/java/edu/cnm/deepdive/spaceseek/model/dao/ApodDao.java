@@ -59,4 +59,9 @@ public interface ApodDao {
   @Query("SELECT * FROM apod WHERE is_favorite")
   LiveData<List<Apod>> getFavorites();
 
+  // Allows APOD updates
+  @Query("UPDATE apod SET is_favorite = :isFavorite WHERE apod_id = :id")
+  Completable updateFavoriteStatus(long id, boolean isFavorite);
+
+
 }

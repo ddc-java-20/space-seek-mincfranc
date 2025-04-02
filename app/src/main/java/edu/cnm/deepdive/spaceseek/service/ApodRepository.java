@@ -70,6 +70,17 @@ public class ApodRepository {
         .subscribeOn(scheduler);
   }
 
+  public Completable update(Apod apod) {
+    return apodDao.updateFavoriteStatus(apod.getId(),
+            apod.isFavorite()) // ✅ Now correctly updates favorites
+        .subscribeOn(Schedulers.io());
+  }
+
+  public LiveData<List<Apod>> getBirthdayApods(String dob) {
+    return apodDao.getBirthdayApods(dob); // ✅ Uses existing DB data instead of refetching via API
+  }
+
+
   public LiveData<Apod> get(long id) {
     return apodDao.select(id);
   }

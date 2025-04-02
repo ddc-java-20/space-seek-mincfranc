@@ -108,7 +108,7 @@ public class CalendarFragment extends Fragment {
     if (apod.getMediaType() == MediaType.IMAGE) {
       viewModel.setApodId(apod.getId());
       Navigation.findNavController(binding.getRoot())
-          .navigate(NavGraphDirections.navigateToImageFragment());
+          .navigate(NavGraphDirections.navigateToImageFragment(apod.getId()));
     } else {
       Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(apod.getLowDefUrl().toString()));
       startActivity(intent);

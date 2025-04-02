@@ -28,13 +28,15 @@ public class ApodViewModel extends ViewModel {
   private final MutableLiveData<Long> apodId;
   private final MutableLiveData<Apod> randomApod;
   private final MutableLiveData<Throwable> throwable;
+  private final MutableLiveData<List<Apod>> birthdayApods;
   private final CompositeDisposable pending;
 
   private final LiveData<List<Apod>> apods;
 
   @Inject
-  ApodViewModel(ApodRepository repository) {
+  ApodViewModel(ApodRepository repository, MutableLiveData<List<Apod>> birthdayApods) {
     this.repository = repository;
+    this.birthdayApods = birthdayApods;
     yearMonth = new MutableLiveData<>(YearMonth.now());
     apodId = new MutableLiveData<>();
     randomApod = new MutableLiveData<>();
@@ -54,6 +56,15 @@ public class ApodViewModel extends ViewModel {
   }
 
   /**
+   * Sets the ID of the APOD for which details are requested.
+   *
+   * @param apodId The unique identifier of the APOD.
+   */
+  public void setApodId(long apodId) {
+    this.apodId.setValue(apodId);
+  }
+
+  /**
    * Retrieves the details of an individual APOD by ID.
    *
    * @return LiveData containing the individual APOD details.
@@ -62,15 +73,6 @@ public class ApodViewModel extends ViewModel {
     return Transformations
         .switchMap(Transformations
             .distinctUntilChanged(apodId), repository::get);
-  }
-
-  /**
-   * Sets the ID of the APOD for which details are requested.
-   *
-   * @param apodId The unique identifier of the APOD.
-   */
-  public void setApodId(long apodId) {
-    this.apodId.setValue(apodId);
   }
 
   public LiveData<Apod> getRandomApod() {
@@ -114,6 +116,30 @@ public class ApodViewModel extends ViewModel {
   public LiveData<List<Apod>> getFavorites() {
     // Fetch favorites from repository and return LiveData<List<Apod>>.
     return repository.getFavorites();
+  }
+
+  /**
+   * Marks an APOD as a favorite
+   */
+  public void markAsFavorite(Apod apod) {
+    apod.setFavorite(true);
+    repository.update(apod) // Update favorite status in database
+        .subscribe(
+            () -> Log.d(TAG, "APOD marked as favorite."),
+            this::postThrowable
+        );
+  }
+
+  /**
+   * Removes an APOD from favorites
+   */
+  public void removeFavorite(Apod apod) {
+    apod.setFavorite(false);
+    repository.update(apod)
+        .subscribe(
+            () -> Log.d(TAG, "APOD removed from favorites."),
+            this::postThrowable
+        );
   }
 
   /**
