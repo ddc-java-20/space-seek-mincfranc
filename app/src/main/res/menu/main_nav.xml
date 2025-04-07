@@ -1,6 +1,6 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  >
 
   <item
     android:id="@+id/calendar_fragment"
@@ -19,3 +19,5 @@
 
 
 </menu>
+
+  <!--change this list to Settings(SETTINGS FRAGMENT), SHARE, AND ____ SOMETHING ELSE I FORGOT, STATS WITH S-->
