@@ -77,9 +77,11 @@ public class ListFragment extends Fragment {
   }
 
   private void onApodSelected(Apod apod) {
+    viewModel.setApodId(apod.getId()); // Stores selected APOD ID before navigation
     Navigation.findNavController(binding.getRoot())
         .navigate(
-            ListFragmentDirections.navigateToImageFragment()); //Ensures correct APOD is loaded
+            ListFragmentDirections.navigateToImageFragment(
+                apod.getId()));//Ensures correct APOD is loaded
   }
 
   public enum ListType {

@@ -80,7 +80,6 @@ public class ApodRepository {
     return apodDao.getBirthdayApods(dob); // ✅ Uses existing DB data instead of refetching via API
   }
 
-
   public LiveData<Apod> get(long id) {
     return apodDao.select(id);
   }

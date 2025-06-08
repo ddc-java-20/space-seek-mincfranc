@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.spaceseek.R;
 import edu.cnm.deepdive.spaceseek.databinding.FragmentLoginBinding;
+import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
 import edu.cnm.deepdive.spaceseek.viewmodel.LoginViewModel;
 
 @AndroidEntryPoint
@@ -25,6 +26,7 @@ public class LoginFragment extends Fragment {
 
   private FragmentLoginBinding binding;
   private LoginViewModel viewModel;
+  private ApodViewModel apodViewModel;
   private ActivityResultLauncher<Intent> launcher;
 
   @Nullable
@@ -48,8 +50,10 @@ public class LoginFragment extends Fragment {
 
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null) {
+      long selectedApodId = apodViewModel.getSelectedApodId(); //retrieve selected apod ID
       Navigation.findNavController(binding.getRoot())
-          .navigate(LoginFragmentDirections.navigateToImageFragment());
+          .navigate(LoginFragmentDirections.navigateToImageFragment(
+              selectedApodId)); //pass required apod ID
     }
   }
 

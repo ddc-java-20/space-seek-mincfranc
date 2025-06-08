@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import edu.cnm.deepdive.spaceseek.R;
+import edu.cnm.deepdive.spaceseek.viewmodel.ApodViewModel;
 import edu.cnm.deepdive.spaceseek.viewmodel.LoginViewModel;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +20,7 @@ import java.util.TimerTask;
 public class PreLoginFragment extends Fragment {
 
   private LoginViewModel viewModel;
+  private ApodViewModel apodViewModel;
   private View root;
 
   @Nullable
@@ -45,6 +47,8 @@ public class PreLoginFragment extends Fragment {
 
   private void checkLoginState() {
     viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+    apodViewModel = new ViewModelProvider(requireActivity()).get(
+        ApodViewModel.class); //APOD tracking
     LifecycleOwner owner = getViewLifecycleOwner();
     viewModel.getAccount().observe(owner, this::handleAccount);
     viewModel.getRefreshThrowable().observe(owner, this::handleThrowable);
@@ -53,8 +57,10 @@ public class PreLoginFragment extends Fragment {
 
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null && root != null) {
+      long selectedApodId = apodViewModel.getSelectedApodId(); //retrieve selected apod id
       Navigation.findNavController(root)
-          .navigate(PreLoginFragmentDirections.navigateToImageFragment());
+          .navigate(PreLoginFragmentDirections.navigateToImageFragment(
+              selectedApodId)); //pass required APOD ID
     }
   }
 

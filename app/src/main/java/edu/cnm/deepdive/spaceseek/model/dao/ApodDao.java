@@ -63,5 +63,8 @@ public interface ApodDao {
   @Query("UPDATE apod SET is_favorite = :isFavorite WHERE apod_id = :id")
   Completable updateFavoriteStatus(long id, boolean isFavorite);
 
+  @Query("SELECT * FROM apod WHERE date = :dob")
+  LiveData<List<Apod>> getBirthdayApods(String dob);
+
 
 }

@@ -36,7 +36,7 @@ public class ApodViewModel extends ViewModel {
   @Inject
   ApodViewModel(ApodRepository repository, MutableLiveData<List<Apod>> birthdayApods) {
     this.repository = repository;
-    this.birthdayApods = birthdayApods;
+    this.birthdayApods = new MutableLiveData<>(); // initialized MutableLiveData to avoid injection issues
     yearMonth = new MutableLiveData<>(YearMonth.now());
     apodId = new MutableLiveData<>();
     randomApod = new MutableLiveData<>();
@@ -62,6 +62,14 @@ public class ApodViewModel extends ViewModel {
    */
   public void setApodId(long apodId) {
     this.apodId.setValue(apodId);
+    Log.d(TAG, "APOD ID set: " + apodId); //added debug log for tracking ID
+  }
+
+  /**
+   * Retrieves the selected APOD ID.
+   */
+  public long getSelectedApodId() {
+    return apodId.getValue() != null ? apodId.getValue() : -1; // added fallback if null
   }
 
   /**
@@ -204,4 +212,5 @@ public class ApodViewModel extends ViewModel {
             pending
         );
   }
+
 }
